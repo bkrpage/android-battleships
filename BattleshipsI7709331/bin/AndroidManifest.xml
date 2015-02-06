@@ -22,14 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="uk.co.bkrpage.battleshipsi7709331.Splash"
-            android:label="@string/title_activity_splash" >
-        </activity>
-        <activity
-            android:name="uk.co.bkrpage.battleshipsi7709331.IntermediateActivity"
-            android:label="@string/title_activity_intermediate" >
-        </activity>
     </application>
 
 </manifest>
