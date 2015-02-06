@@ -1,9 +1,7 @@
-package com.example.battleshipsi7709331;
+package uk.co.bkrpage.battleshipsi7709331;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 public class GameActivity extends Activity {
 
