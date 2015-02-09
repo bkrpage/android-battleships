@@ -26,7 +26,7 @@ public class BoardViewShips extends BoardView {
 		for (int col = 0; col < bGame.getColumns(); col++) {
 			for (int row = 0; row < bGame.getRows(); row++) {
 				Paint paint;
-				shipAtPos = bGame.getShip(col, row);
+				shipAtPos = bGame.getPlayer1Target(col, row);
 				if (shipAtPos == 1) {
 					paint = getPlayer1Paint();
 				} else if (shipAtPos == 2) {
@@ -79,7 +79,7 @@ public class BoardViewShips extends BoardView {
 
 			
 				if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player is clicking inside the grid - it crashes if not  here..
-					if (bGame.getTarget(touchedColumn, touchedRow) == 0){
+					if (bGame.getPlayer1Target(touchedColumn, touchedRow) == 0){
 						bGame.shipPlace(touchedColumn, touchedRow, currentPlayer);
 					}
 				}

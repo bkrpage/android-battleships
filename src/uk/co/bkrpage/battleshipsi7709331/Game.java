@@ -6,11 +6,10 @@ public class Game {
 
 	private final int bColumns;
 	private final int bRows;
-	private final int[][] bShips;
-	private final int[][] bShots;
+	private final int[][] player1Grid;
+	private final int[][] player2Grid;
 	
 	private int shipCount = 4;
-	private Ship[] ship;
 	
 	private int currentPlayer;
 	//TODO Cannibalise this and make into different classes i.e. ShipPlace.java shots.java
@@ -19,8 +18,8 @@ public class Game {
 		bColumns = columns;
 		bRows = rows;
 		currentPlayer = 1;
-		bShips = new int[columns][rows];
-		bShots = new int[columns][rows];
+		player1Grid = new int[columns][rows];
+		player2Grid = new int[columns][rows];
 	}
 	
 	public int getColumns() {
@@ -31,8 +30,12 @@ public class Game {
 		return bRows;
 	}
 
-	public int getTarget(int column, int row) {
-		return bShots[column][row];
+	public int getPlayer1Target(int column, int row) {
+		return player1Grid[column][row];
+	}
+
+	public int getPlayer2Target(int column, int row) {
+		return player2Grid[column][row];
 	}
 
 	public boolean playTarget(int column, int row, int player) {
@@ -41,8 +44,8 @@ public class Game {
 		}
 		for (int iRow = 0; iRow < bRows; ++iRow) {
 			for (int jCol = 0; jCol < bColumns; jCol++) {
-				if (bShots[column][row] == 0) {
-					bShots[column][row] = player;
+				if (player1Grid[column][row] == 0) {
+					player1Grid[column][row] = player;
 					return true;
 				}
 			}
@@ -50,18 +53,18 @@ public class Game {
 		return false;
 	}
 
-	public int getShip(int column, int row) {
-		return bShips[column][row];
-	}
-	
+//	public int getShip(int column, int row) {
+//		return bShips[column][row];
+//	}
+//	
 	public boolean shipPlace(int column, int row, int player) {
 		if (player <= 0) {
 			throw new IllegalArgumentException("Player Numbers start with 1");
 		}
 		for (int iRow = 0; iRow < bRows; ++iRow) {
 			for (int jCol = 0; jCol < bColumns; jCol++) {
-				if (bShips[column][row] == 0) {
-					bShips[column][row] = player;
+				if (player1Grid[column][row] == 0) {
+					player1Grid[column][row] = player;
 					return true;
 				}
 			}
