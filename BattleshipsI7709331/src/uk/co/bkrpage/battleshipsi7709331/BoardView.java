@@ -19,32 +19,32 @@ public class BoardView extends View {
 
 	public static final double SEPARATOR_RATIO = 0.025;
 
-	private Game mGame = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS);
+	private Game bGame = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS);
 
-	private Paint mGridPaint;
-	private Paint mPlayer1Paint;
-	private Paint mPlayer2Paint;
-	private Paint mBGPaint;
+	private Paint bGridPaint;
+	private Paint bPlayer1Paint;
+	private Paint bPlayer2Paint;
+	private Paint bBGPaint;
 
 	// The calculations to find the best dimensions for the grid.
 
 	private void init() {
 
-		mGridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mGridPaint.setStyle(Paint.Style.FILL);
-		mGridPaint.setColor(Color.WHITE);
+		bGridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		bGridPaint.setStyle(Paint.Style.FILL);
+		bGridPaint.setColor(Color.WHITE);
 
-		mPlayer1Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mPlayer1Paint.setStyle(Paint.Style.FILL);
-		mPlayer1Paint.setColor(Color.RED);
+		bPlayer1Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		bPlayer1Paint.setStyle(Paint.Style.FILL);
+		bPlayer1Paint.setColor(Color.RED);
 
-		mPlayer2Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mPlayer2Paint.setStyle(Paint.Style.FILL);
-		mPlayer2Paint.setColor(Color.BLUE);
+		bPlayer2Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		bPlayer2Paint.setStyle(Paint.Style.FILL);
+		bPlayer2Paint.setColor(Color.BLUE);
 
-		mBGPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mBGPaint.setStyle(Paint.Style.FILL);
-		mBGPaint.setColor(Color.GRAY);
+		bBGPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		bBGPaint.setStyle(Paint.Style.FILL);
+		bBGPaint.setColor(Color.GRAY);
 
 	}
 
@@ -62,16 +62,16 @@ public class BoardView extends View {
 
 		int targetAtPos;
 
-		for (int col = 0; col < mGame.getColumns(); col++) {
-			for (int row = 0; row < mGame.getRows(); row++) {
+		for (int col = 0; col < bGame.getColumns(); col++) {
+			for (int row = 0; row < bGame.getRows(); row++) {
 				Paint paint;
-				targetAtPos = mGame.getTarget(col, row);
+				targetAtPos = bGame.getTarget(col, row);
 				if (targetAtPos == 1) {
-					paint = mPlayer1Paint;
+					paint = bPlayer1Paint;
 				} else if (targetAtPos == 2) {
-					paint = mPlayer2Paint;
+					paint = bPlayer2Paint;
 				} else {
-					paint = mBGPaint;
+					paint = bBGPaint;
 				}
 
 				float ls = separator + (diameter + separator) * col; // left
@@ -121,14 +121,10 @@ public class BoardView extends View {
 					/ ((separator + diameter) * Game.DEFAULT_ROWS) * 10);
 
 			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player is clicking inside the grid - it crashes if not  here..
-				if (mGame.getTarget(touchedColumn, touchedRow) == 0){
-					mGame.playTarget(touchedColumn, touchedRow, currentPlayer);
-
-					if (currentPlayer == 1) {
-						currentPlayer++;
-					} else {
-						currentPlayer = 1;
-					}
+				if (bGame.getTarget(touchedColumn, touchedRow) == 0){
+					bGame.playTarget(touchedColumn, touchedRow, currentPlayer);
+					
+					currentPlayer = bGame.changePlayer(currentPlayer);
 				}
 
 			}
@@ -140,14 +136,14 @@ public class BoardView extends View {
 		}
 	}
 
-	GestureDetector mDetector = new GestureDetector(this.getContext(),
+	GestureDetector bDetector = new GestureDetector(this.getContext(),
 			new mListener());
 
 	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 
-		boolean result = mDetector.onTouchEvent(event);
+		boolean result = bDetector.onTouchEvent(event);
 		if (!result) {
 			if (event.getAction() == MotionEvent.ACTION_UP) {
 				result = true;
