@@ -149,8 +149,6 @@ public class BoardView extends View {
 				result = true;
 			}
 		}
-
-		// int tokenAtPos = mGame.getToken(column, row);
 		return result;
 	}
 
