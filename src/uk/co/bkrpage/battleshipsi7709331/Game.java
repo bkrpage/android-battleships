@@ -9,11 +9,16 @@ public class Game {
 	private final int[][] bShips;
 	private final int[][] bShots;
 	
+	private int shipCount = 4;
+	private Ship[] ship;
+	
+	private int currentPlayer;
 	//TODO Cannibalise this and make into different classes i.e. ShipPlace.java shots.java
 	
 	public Game(int columns, int rows) {
 		bColumns = columns;
 		bRows = rows;
+		currentPlayer = 1;
 		bShips = new int[columns][rows];
 		bShots = new int[columns][rows];
 	}
@@ -64,14 +69,33 @@ public class Game {
 		return false;
 	}
 	
-	public int changePlayer(int currentPlayer){
+	public void changePlayerFrom(int player){
 		
-		if (currentPlayer == 1) {
-			currentPlayer++;
+		if (player == 1) {
+			player++;
 		} else {
-			currentPlayer = 1;
+			player = 1;
 		}
 		
-		return currentPlayer;
+		setPlayer(player);
 	}
+	
+	public void setPlayer(int player){
+		currentPlayer = player;
+	}
+	public int getPlayer(){
+		return currentPlayer;
+	};
+	
+	public int getShipCount(int i){
+		return shipCount;
+	}
+	
+	public void setShipCount(int i){
+		shipCount = i;
+	}
+	
+	//public void setShipPos(int row, int col){
+	//	ship[shipCount] = player; 
+	//}
 }

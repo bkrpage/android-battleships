@@ -57,8 +57,6 @@ public class BoardViewGame extends BoardView {
 			return true;
 		}
 
-		private int currentPlayer = 1;
-
 		@Override
 		public boolean onSingleTapConfirmed(MotionEvent e) {
 			
@@ -78,11 +76,10 @@ public class BoardViewGame extends BoardView {
 
 			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player is clicking inside the grid - it crashes if not  here..
 				if (bGame.getTarget(touchedColumn, touchedRow) == 0){
-					bGame.playTarget(touchedColumn, touchedRow, currentPlayer);
+					bGame.playTarget(touchedColumn, touchedRow, bGame.getPlayer());
 					
-					currentPlayer = bGame.changePlayer(currentPlayer);
+					bGame.changePlayerFrom(bGame.getPlayer());
 				}
-
 			}
 
 			// TODO Add Change of player method in which activity is changed
