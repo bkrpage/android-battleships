@@ -27,6 +27,16 @@ public class BoardView extends View {
 	private Paint bBGPaint;
 
 	// The calculations to find the best dimensions for the grid.
+	private float calcDiam(){
+		float calcX =(float) Math.floor(getWidth()
+				/ (Game.DEFAULT_COLUMNS + (Game.DEFAULT_COLUMNS + 1)
+						* SEPARATOR_RATIO));
+		float calcY =(float) Math.floor(getHeight()
+			/ (Game.DEFAULT_ROWS + (Game.DEFAULT_ROWS + 1)
+					* SEPARATOR_RATIO));
+		float diameter = Math.min(calcX, calcY);
+		return diameter;
+	}
 
 	private void init() {
 
@@ -52,12 +62,8 @@ public class BoardView extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
-		float diameterX = (float) Math.floor(getWidth()
-				/ (Game.DEFAULT_COLUMNS + (Game.DEFAULT_COLUMNS + 1)
-						* SEPARATOR_RATIO));
-		float diameterY = (float) Math.floor(getHeight()
-				/ (Game.DEFAULT_ROWS + (Game.DEFAULT_ROWS + 1) * SEPARATOR_RATIO));
-		float diameter = Math.min(diameterX, diameterY);
+		
+		float diameter = calcDiam();
 		float separator = (float) (diameter * SEPARATOR_RATIO);
 
 		int targetAtPos;
@@ -100,13 +106,8 @@ public class BoardView extends View {
 
 		@Override
 		public boolean onSingleTapConfirmed(MotionEvent e) {
-
-			float diameterX = (float) Math.floor(getWidth()
-					/ (Game.DEFAULT_COLUMNS + (Game.DEFAULT_COLUMNS + 1)
-							* SEPARATOR_RATIO));
-			float diameterY = (float) Math.floor(getHeight()
-					/ (Game.DEFAULT_ROWS + (Game.DEFAULT_ROWS + 1) * SEPARATOR_RATIO));
-			float diameter = Math.min(diameterX, diameterY);
+			
+			float diameter = calcDiam();
 			float separator = (float) (diameter * SEPARATOR_RATIO);
 
 			int touchedColumn;

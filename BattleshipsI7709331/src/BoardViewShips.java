@@ -10,6 +10,6 @@ public class BoardViewShips extends BoardView {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+	// TODO add ship Placement.
 
 }
