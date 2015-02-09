@@ -1,13 +1,10 @@
 package uk.co.bkrpage.battleshipsi7709331;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 
 public class BoardView extends View {
@@ -19,7 +16,7 @@ public class BoardView extends View {
 
 	public static final double SEPARATOR_RATIO = 0.025;
 
-	private Game bGame = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS);
+	Game bGame = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS);
 
 	private Paint bGridPaint;
 	private Paint bPlayer1Paint;
@@ -27,7 +24,7 @@ public class BoardView extends View {
 	private Paint bBGPaint;
 
 	// The calculations to find the best dimensions for the grid.
-	private float calcDiam(){
+	float calcDiam(){
 		float calcX =(float) Math.floor(getWidth()
 				/ (Game.DEFAULT_COLUMNS + (Game.DEFAULT_COLUMNS + 1)
 						* SEPARATOR_RATIO));
@@ -95,62 +92,5 @@ public class BoardView extends View {
 
 	}
 
-	class mListener extends GestureDetector.SimpleOnGestureListener {
-
-		@Override
-		public boolean onDown(MotionEvent e) {
-			return true;
-		}
-
-		private int currentPlayer = 1;
-
-		@Override
-		public boolean onSingleTapConfirmed(MotionEvent e) {
-			
-			float diameter = calcDiam();
-			float separator = (float) (diameter * SEPARATOR_RATIO);
-
-			int touchedColumn;
-			int touchedRow;
-
-			float touchX = e.getX();
-			float touchY = e.getY();
-
-			touchedColumn = (int) Math.floor(touchX
-					/ ((separator + diameter) * Game.DEFAULT_COLUMNS) * 10);
-			touchedRow = (int) Math.floor(touchY
-					/ ((separator + diameter) * Game.DEFAULT_ROWS) * 10);
-
-			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player is clicking inside the grid - it crashes if not  here..
-				if (bGame.getTarget(touchedColumn, touchedRow) == 0){
-					bGame.playTarget(touchedColumn, touchedRow, currentPlayer);
-					
-					currentPlayer = bGame.changePlayer(currentPlayer);
-				}
-
-			}
-
-			// TODO Add Change of player method in which activity is changed
-
-			invalidate();
-			return false;
-		}
-	}
-
-	GestureDetector bDetector = new GestureDetector(this.getContext(),
-			new mListener());
-
-	@SuppressLint("ClickableViewAccessibility")
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-
-		boolean result = bDetector.onTouchEvent(event);
-		if (!result) {
-			if (event.getAction() == MotionEvent.ACTION_UP) {
-				result = true;
-			}
-		}
-		return result;
-	}
 
 }
