@@ -6,12 +6,16 @@ public class Game {
 
 	private final int bColumns;
 	private final int bRows;
-	private final int[][] bData;
+	private final int[][] bShips;
+	private final int[][] bShots;
+	
+	//TODO Cannibalise this and make into different classes i.e. ShipPlace.java shots.java
 	
 	public Game(int columns, int rows) {
 		bColumns = columns;
 		bRows = rows;
-		bData = new int[columns][rows];
+		bShips = new int[columns][rows];
+		bShots = new int[columns][rows];
 	}
 	
 	public int getColumns() {
@@ -23,7 +27,7 @@ public class Game {
 	}
 
 	public int getTarget(int column, int row) {
-		return bData[column][row];
+		return bShots[column][row];
 	}
 
 	public boolean playTarget(int column, int row, int player) {
@@ -32,8 +36,27 @@ public class Game {
 		}
 		for (int iRow = 0; iRow < bRows; ++iRow) {
 			for (int jCol = 0; jCol < bColumns; jCol++) {
-				if (bData[column][row] == 0) {
-					bData[column][row] = player;
+				if (bShots[column][row] == 0) {
+					bShots[column][row] = player;
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public int getShip(int column, int row) {
+		return bShips[column][row];
+	}
+	
+	public boolean shipPlace(int column, int row, int player) {
+		if (player <= 0) {
+			throw new IllegalArgumentException("Player Numbers start with 1");
+		}
+		for (int iRow = 0; iRow < bRows; ++iRow) {
+			for (int jCol = 0; jCol < bColumns; jCol++) {
+				if (bShips[column][row] == 0) {
+					bShips[column][row] = player;
 					return true;
 				}
 			}

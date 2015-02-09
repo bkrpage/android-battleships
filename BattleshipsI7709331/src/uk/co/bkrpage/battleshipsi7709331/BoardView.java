@@ -18,10 +18,10 @@ public class BoardView extends View {
 
 	Game bGame = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS);
 
-	private Paint bGridPaint;
-	private Paint bPlayer1Paint;
-	private Paint bPlayer2Paint;
-	private Paint bBGPaint;
+	private Paint gridPaint;
+	private Paint player1Paint;
+	private Paint player2Paint;
+	private Paint bGPaint;
 
 	// The calculations to find the best dimensions for the grid.
 	float calcDiam(){
@@ -37,21 +37,21 @@ public class BoardView extends View {
 
 	private void init() {
 
-		bGridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		bGridPaint.setStyle(Paint.Style.FILL);
-		bGridPaint.setColor(Color.WHITE);
+		gridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		gridPaint.setStyle(Paint.Style.FILL);
+		gridPaint.setColor(Color.WHITE);
 
-		bPlayer1Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		bPlayer1Paint.setStyle(Paint.Style.FILL);
-		bPlayer1Paint.setColor(Color.RED);
+		player1Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		player1Paint.setStyle(Paint.Style.FILL);
+		player1Paint.setColor(Color.RED);
 
-		bPlayer2Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		bPlayer2Paint.setStyle(Paint.Style.FILL);
-		bPlayer2Paint.setColor(Color.BLUE);
+		player2Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		player2Paint.setStyle(Paint.Style.FILL);
+		player2Paint.setColor(Color.BLUE);
 
-		bBGPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		bBGPaint.setStyle(Paint.Style.FILL);
-		bBGPaint.setColor(Color.GRAY);
+		bGPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		bGPaint.setStyle(Paint.Style.FILL);
+		bGPaint.setColor(Color.GRAY);
 
 	}
 
@@ -70,11 +70,11 @@ public class BoardView extends View {
 				Paint paint;
 				targetAtPos = bGame.getTarget(col, row);
 				if (targetAtPos == 1) {
-					paint = bPlayer1Paint;
+					paint = player1Paint;
 				} else if (targetAtPos == 2) {
-					paint = bPlayer2Paint;
+					paint = player2Paint;
 				} else {
-					paint = bBGPaint;
+					paint = bGPaint;
 				}
 
 				float ls = separator + (diameter + separator) * col; // left
@@ -90,6 +90,38 @@ public class BoardView extends View {
 			}
 		}
 
+	}
+
+	public Paint getGridPaint() {
+		return gridPaint;
+	}
+
+	public void setGridPaint(Paint gridPaint) {
+		this.gridPaint = gridPaint;
+	}
+
+	public Paint getPlayer1Paint() {
+		return player1Paint;
+	}
+
+	public void setPlayer1Paint(Paint player1Paint) {
+		this.player1Paint = player1Paint;
+	}
+
+	public Paint getPlayer2Paint() {
+		return player2Paint;
+	}
+
+	public void setPlayer2Paint(Paint player2Paint) {
+		this.player2Paint = player2Paint;
+	}
+
+	public Paint getBGPaint() {
+		return bGPaint;
+	}
+
+	public void setBGPaint(Paint bGPaint) {
+		this.bGPaint = bGPaint;
 	}
 
 

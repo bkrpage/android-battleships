@@ -2,6 +2,8 @@ package uk.co.bkrpage.battleshipsi7709331;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -11,6 +13,41 @@ public class BoardViewGame extends BoardView {
 	public BoardViewGame(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
+	}
+	
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+
+		
+		float diameter = calcDiam();
+		float separator = (float) (diameter * SEPARATOR_RATIO);
+
+		int targetAtPos;
+
+		for (int col = 0; col < bGame.getColumns(); col++) {
+			for (int row = 0; row < bGame.getRows(); row++) {
+				Paint paint;
+				targetAtPos = bGame.getTarget(col, row);
+				if (targetAtPos == 1) {
+					paint = getPlayer1Paint();
+				} else if (targetAtPos == 2) {
+					paint = getPlayer2Paint();
+				} else {
+					paint = getBGPaint();
+				}
+
+				float ls = separator + (diameter + separator) * col; // left
+																		// Coordinate
+				float ts = separator + (diameter + separator) * row; // top
+																		// coordinate
+				float rs = separator + diameter + (diameter + separator) * col; // right
+																				// coordinate
+				float bs = separator + diameter + (diameter + separator) * row; // bottom
+																				// coordinate
+
+				canvas.drawRect(ls, ts, rs, bs, paint);
+			}
+		}
 	}
 
 	class mListener extends GestureDetector.SimpleOnGestureListener {
@@ -49,8 +86,13 @@ public class BoardViewGame extends BoardView {
 			}
 
 			// TODO Add Change of player method in which activity is changed
+			
+			float ls = separator + (diameter + separator) * touchedColumn; // left
+			float ts = separator + (diameter + separator) * touchedRow; // top
+			float rs = separator + diameter + (diameter + separator) * touchedColumn; // right
+			float bs = separator + diameter + (diameter + separator) * touchedRow; // bottom
 
-			invalidate();
+			invalidate((int)ls,(int)ts,(int)rs,(int)bs);
 			return false;
 		}
 	}
