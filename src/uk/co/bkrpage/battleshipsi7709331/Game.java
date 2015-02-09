@@ -40,4 +40,15 @@ public class Game {
 		}
 		return false;
 	}
+	
+	public int changePlayer(int currentPlayer){
+		
+		if (currentPlayer == 1) {
+			currentPlayer++;
+		} else {
+			currentPlayer = 1;
+		}
+		
+		return currentPlayer;
+	}
 }
