@@ -77,12 +77,12 @@ public class BoardViewShips extends BoardView {
 			touchedRow = (int) Math.floor(touchY
 					/ ((separator + diameter) * Game.DEFAULT_ROWS) * 10);
 
-			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player is clicking inside the grid - it crashes if not  here..
-				if (bGame.getTarget(touchedColumn, touchedRow) == 0){
-					bGame.shipPlace(touchedColumn, touchedRow, currentPlayer);
+			
+				if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player is clicking inside the grid - it crashes if not  here..
+					if (bGame.getTarget(touchedColumn, touchedRow) == 0){
+						bGame.shipPlace(touchedColumn, touchedRow, currentPlayer);
+					}
 				}
-
-			}
 
 			// TODO Add Change of player method in which activity is changed
 			
