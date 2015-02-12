@@ -74,13 +74,13 @@ public class BoardViewGame extends BoardView {
 			touchedRow = (int) Math.floor(touchY
 					/ ((separator + diameter) * Game.DEFAULT_ROWS) * 10);
 
-			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player is clicking inside the grid - it crashes if not  here..
-				if (bGame.getPlayer1Target(touchedColumn, touchedRow) == 0){
-					bGame.playTarget(touchedColumn, touchedRow, bGame.getPlayer());
-					
-					bGame.changePlayerFrom(bGame.getPlayer());
-				}
-			}
+//			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player is clicking inside the grid - it crashes if not  here..
+//				if (bGame.getPlayer1Target(touchedColumn, touchedRow) == 0){
+//					bGame.playTarget(touchedColumn, touchedRow, bGame.getPlayer());
+//					
+//					bGame.changePlayerFrom(bGame.getPlayer());
+//				}
+//			}
 
 			// TODO Add Change of player method in which activity is changed
 			
