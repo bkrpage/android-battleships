@@ -27,7 +27,7 @@ public class BoardViewGame extends BoardView {
 		for (int col = 0; col < bGame.getColumns(); col++) {
 			for (int row = 0; row < bGame.getRows(); row++) {
 				Paint paint;
-				targetAtPos = bGame.getTarget(col, row);
+				targetAtPos = bGame.getPlayer1Target(col, row);
 				if (targetAtPos == 1) {
 					paint = getPlayer1Paint();
 				} else if (targetAtPos == 2) {
@@ -75,7 +75,7 @@ public class BoardViewGame extends BoardView {
 					/ ((separator + diameter) * Game.DEFAULT_ROWS) * 10);
 
 			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player is clicking inside the grid - it crashes if not  here..
-				if (bGame.getTarget(touchedColumn, touchedRow) == 0){
+				if (bGame.getPlayer1Target(touchedColumn, touchedRow) == 0){
 					bGame.playTarget(touchedColumn, touchedRow, bGame.getPlayer());
 					
 					bGame.changePlayerFrom(bGame.getPlayer());

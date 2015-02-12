@@ -3,23 +3,26 @@ package uk.co.bkrpage.battleshipsi7709331;
 public class Game {
 	public static final int DEFAULT_COLUMNS = 10;
 	public static final int DEFAULT_ROWS = 10;
+	public static final int PLAYERS = 2;
 
 	private final int bColumns;
 	private final int bRows;
 	private final int[][] player1Grid;
 	private final int[][] player2Grid;
 	
-	private int shipCount = 4;
+	int shipCount[];
 	
 	private int currentPlayer;
 	//TODO Cannibalise this and make into different classes i.e. ShipPlace.java shots.java
 	
-	public Game(int columns, int rows) {
+	public Game(int columns, int rows, int players) {
 		bColumns = columns;
 		bRows = rows;
+		// TODO Remove this 
 		currentPlayer = 1;
 		player1Grid = new int[columns][rows];
 		player2Grid = new int[columns][rows];
+		shipCount = new int[players];
 	}
 	
 	public int getColumns() {
@@ -29,6 +32,12 @@ public class Game {
 	public int getRows() {
 		return bRows;
 	}
+	
+	public void initPlayers(){
+		for (int i = 0; i < shipCount.length; i++){
+			shipCount[i] = 4;
+		}
+	};
 
 	public int getPlayer1Target(int column, int row) {
 		return player1Grid[column][row];
@@ -90,13 +99,13 @@ public class Game {
 		return currentPlayer;
 	};
 	
-	public int getShipCount(int i){
-		return shipCount;
-	}
-	
-	public void setShipCount(int i){
-		shipCount = i;
-	}
+//	public int getShipCount(int i){
+//		return shipCount;
+//	}
+//	
+//	public void setShipCount(int i){
+//		shipCount = i;
+//	}
 	
 	//public void setShipPos(int row, int col){
 	//	ship[shipCount] = player; 

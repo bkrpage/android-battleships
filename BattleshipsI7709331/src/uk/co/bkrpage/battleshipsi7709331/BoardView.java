@@ -1,9 +1,9 @@
 package uk.co.bkrpage.battleshipsi7709331;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -16,12 +16,14 @@ public class BoardView extends View {
 
 	public static final double SEPARATOR_RATIO = 0.025;
 
-	Game bGame = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS);
+	Game bGame = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS, Game.PLAYERS);
 
 	private Paint gridPaint;
 	private Paint player1Paint;
 	private Paint player2Paint;
 	private Paint bGPaint;
+	
+	protected Paint textPaint;
 
 	// The calculations to find the best dimensions for the grid.
 	float calcDiam(){
@@ -52,44 +54,12 @@ public class BoardView extends View {
 		bGPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		bGPaint.setStyle(Paint.Style.FILL);
 		bGPaint.setColor(Color.GRAY);
-
-	}
-
-	@Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-
 		
-		float diameter = calcDiam();
-		float separator = (float) (diameter * SEPARATOR_RATIO);
+		textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		textPaint.setColor(Color.RED);
+		textPaint.setTypeface(Typeface.DEFAULT);
 
-		int targetAtPos;
-
-		for (int col = 0; col < bGame.getColumns(); col++) {
-			for (int row = 0; row < bGame.getRows(); row++) {
-				Paint paint;
-				targetAtPos = bGame.getTarget(col, row);
-				if (targetAtPos == 1) {
-					paint = player1Paint;
-				} else if (targetAtPos == 2) {
-					paint = player2Paint;
-				} else {
-					paint = bGPaint;
-				}
-
-				float ls = separator + (diameter + separator) * col; // left
-																		// Coordinate
-				float ts = separator + (diameter + separator) * row; // top
-																		// coordinate
-				float rs = separator + diameter + (diameter + separator) * col; // right
-																				// coordinate
-				float bs = separator + diameter + (diameter + separator) * row; // bottom
-																				// coordinate
-
-				canvas.drawRect(ls, ts, rs, bs, paint);
-			}
-		}
-
+		bGame.initPlayers();
 	}
 
 	public Paint getGridPaint() {
