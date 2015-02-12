@@ -4,6 +4,10 @@ public class Game {
 	public static final int DEFAULT_COLUMNS = 10;
 	public static final int DEFAULT_ROWS = 10;
 	public static final int PLAYERS = 2;
+	
+	public static final int ACTION_HIT = 3;
+	public static final int ACTION_MISS = 2;
+	public static final int ACTION_SHIP = 1;
 
 	private final int bColumns;
 	private final int bRows;
@@ -23,6 +27,10 @@ public class Game {
 		player1Grid = new int[columns][rows];
 		player2Grid = new int[columns][rows];
 		shipCount = new int[players];
+		
+		for (int i = 0; i < shipCount.length; i++){
+			shipCount[i] = 4;
+		}
 	}
 	
 	public int getColumns() {
@@ -32,32 +40,22 @@ public class Game {
 	public int getRows() {
 		return bRows;
 	}
-	
-	public void initPlayers(){
-		for (int i = 0; i < shipCount.length; i++){
-			shipCount[i] = 4;
-		}
-	};
 
-	public int getPlayer1Target(int column, int row) {
+	public int getPlayer1Grid(int column, int row) {
 		return player1Grid[column][row];
 	}
 
-	public int getPlayer2Target(int column, int row) {
+	public int getPlayer2Grid(int column, int row) {
 		return player2Grid[column][row];
 	}
 
 	public boolean touchGrid(int column, int row, int action) {
-		if (action <= 0) {
-			throw new IllegalArgumentException("Player Numbers start with 1");
-		}
 		for (int iRow = 0; iRow < bRows; ++iRow) {
 			for (int jCol = 0; jCol < bColumns; jCol++) {
-				if (player1Grid[column][row] == 0) {
+				if (player1Grid[column][row] == 0 || player1Grid[column][row] == ACTION_SHIP) { // TODO Move the ACTION_SHIP side to somewhere else.
 					player1Grid[column][row] = action;
 					return true;
 				}
-				//TODO Change to take into account player -is turning into action
 			}
 		}
 		return false;
@@ -67,17 +65,17 @@ public class Game {
 //		return bShips[column][row];
 //	}
 //	
-	public boolean shipPlace(int column, int row, int action) {
-		for (int iRow = 0; iRow < bRows; ++iRow) {
-			for (int jCol = 0; jCol < bColumns; jCol++) {
-				if (player1Grid[column][row] == 0) {
-					player1Grid[column][row] = action;
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+//	public boolean shipPlace(int column, int row, int action) {
+//		for (int iRow = 0; iRow < bRows; ++iRow) {
+//			for (int jCol = 0; jCol < bColumns; jCol++) {
+//				if (player1Grid[column][row] == 0) {
+//					player1Grid[column][row] = action;
+//					return true;
+//				}
+//			}
+//		}
+//		return false;
+//	}
 	
 //	public void changePlayerFrom(int player){
 //		
