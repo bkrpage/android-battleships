@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 public class BoardViewShips extends BoardView {
 
@@ -25,15 +26,15 @@ public class BoardViewShips extends BoardView {
 		for (int col = 0; col < bGame.getColumns(); col++) {
 			for (int row = 0; row < bGame.getRows(); row++) {
 				Paint paint;
-				actionAtPos = bGame.getPlayer1Target(col, row);
+				actionAtPos = bGame.getPlayer1Grid(col, row);
 
 				// TODO Convert this code into correct functions - basically
 				// treating it as one player.
-				if (actionAtPos == 1) {
+				if (actionAtPos == Game.ACTION_SHIP) {
 					paint = getShipPaint();
-				} else if (actionAtPos == 2) {
+				} else if (actionAtPos == Game.ACTION_MISS) {
 					paint = getMissPaint();
-				} else if (actionAtPos == 3) {
+				} else if (actionAtPos == Game.ACTION_HIT) {
 					paint = getHitPaint();
 				} else {
 					paint = getBGPaint();
@@ -70,7 +71,7 @@ public class BoardViewShips extends BoardView {
 
 		//private int currentPlayer = 1;
 		
-		private int[] action = {1,2,3};
+		//private int[] action = {1,2,3};
 
 		// TODO Move change player stuff to Game.java
 
@@ -90,25 +91,33 @@ public class BoardViewShips extends BoardView {
 					/ ((separator + diameter) * Game.DEFAULT_COLUMNS) * 10);
 			touchedRow = (int) Math.floor(touchY
 					/ ((separator + diameter) * Game.DEFAULT_ROWS) * 10);
+			
 
 			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player
 															// is clicking
 															// inside the grid
 				if (bGame.shipCount[0] >= 0) {
-					if (bGame.getPlayer1Target(touchedColumn, touchedRow) != 1) {
-						bGame.shipPlace(touchedColumn, touchedRow, action[0]);
+					if (bGame.getPlayer1Grid(touchedColumn, touchedRow) != Game.ACTION_SHIP) {
+						//if 
+						bGame.touchGrid(touchedColumn, touchedRow, Game.ACTION_SHIP);
 
 						bGame.shipCount[0]--;
+						
+						Toast toast = Toast.makeText(getContext(), "Ship Placed", Toast.LENGTH_SHORT);
+						toast.show();
 					}
 				} else {
-					if (bGame.getPlayer1Target(touchedColumn, touchedRow) == 1){
+					if (bGame.getPlayer1Grid(touchedColumn, touchedRow) == Game.ACTION_SHIP){
 						
-						bGame.shipPlace(touchedColumn, touchedRow, action[2]); //ship hit
+						bGame.touchGrid(touchedColumn, touchedRow, Game.ACTION_HIT); //ship hit
 						
-					} else if (bGame.getPlayer1Target(touchedColumn, touchedRow) != 2 
-							&& bGame.getPlayer1Target(touchedColumn, touchedRow) != 3) {
+						Toast toast = Toast.makeText(getContext(), "Ship Hit", Toast.LENGTH_SHORT);
+						toast.show();
 						
-								bGame.shipPlace(touchedColumn, touchedRow, action[1]); //ship missed
+					} else if (bGame.getPlayer1Grid(touchedColumn, touchedRow) != Game.ACTION_MISS 
+							&& bGame.getPlayer1Grid(touchedColumn, touchedRow) != Game.ACTION_HIT) {
+						
+								bGame.touchGrid(touchedColumn, touchedRow, Game.ACTION_MISS); //ship missed
 					}
 				}
 				

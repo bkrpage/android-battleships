@@ -16,7 +16,7 @@ public class BoardView extends View {
 
 	public static final double SEPARATOR_RATIO = 0.025;
 
-	static Game bGame = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS, Game.PLAYERS);
+	Game bGame = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS, Game.PLAYERS);
 
 	private Paint gridPaint;
 	private Paint shipPaint;
@@ -41,7 +41,7 @@ public class BoardView extends View {
 		return diameter;
 	}
 
-	private void init() {
+	private void init(){
 
 		gridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		gridPaint.setStyle(Paint.Style.FILL);
@@ -53,30 +53,29 @@ public class BoardView extends View {
 		
 		missPaint = new Paint();
 		missPaint.setStyle(Paint.Style.FILL);
-		missPaint.setColor(Color.RED);
+		missPaint.setColor(0xFF008EBA);
 		
 		hitPaint = new Paint();
 		hitPaint.setStyle(Paint.Style.FILL);
 		hitPaint.setColor(Color.GREEN);
 		
 
-		player1Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		player1Paint.setStyle(Paint.Style.FILL);
-		player1Paint.setColor(Color.RED);
-
-		player2Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		player2Paint.setStyle(Paint.Style.FILL);
-		player2Paint.setColor(Color.BLUE);
+//		player1Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+//		player1Paint.setStyle(Paint.Style.FILL);
+//		player1Paint.setColor(Color.RED);
+//
+//		player2Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+//		player2Paint.setStyle(Paint.Style.FILL);
+//		player2Paint.setColor(Color.BLUE);
 
 		bGPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		bGPaint.setStyle(Paint.Style.FILL);
-		bGPaint.setColor(Color.GRAY);
+		bGPaint.setColor(0xFF00C3FF);
 		
 		textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		textPaint.setColor(Color.RED);
 		textPaint.setTypeface(Typeface.DEFAULT);
 
-		bGame.initPlayers();
 	}
 
 	public Paint getGridPaint() {

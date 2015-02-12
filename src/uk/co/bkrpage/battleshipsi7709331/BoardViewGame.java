@@ -27,7 +27,7 @@ public class BoardViewGame extends BoardView {
 		for (int col = 0; col < bGame.getColumns(); col++) {
 			for (int row = 0; row < bGame.getRows(); row++) {
 				Paint paint;
-				targetAtPos = bGame.getPlayer1Target(col, row);
+				targetAtPos = bGame.getPlayer1Grid(col, row);
 				if (targetAtPos == 1) {
 					paint = getPlayer1Paint();
 				} else if (targetAtPos == 2) {
