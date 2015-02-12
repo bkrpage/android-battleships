@@ -20,19 +20,21 @@ public class BoardViewShips extends BoardView {
 		float diameter = calcDiam();
 		float separator = (float) (diameter * SEPARATOR_RATIO);
 
-		int shipAtPos;
+		int actionAtPos;
 
 		for (int col = 0; col < bGame.getColumns(); col++) {
 			for (int row = 0; row < bGame.getRows(); row++) {
 				Paint paint;
-				shipAtPos = bGame.getPlayer1Target(col, row);
+				actionAtPos = bGame.getPlayer1Target(col, row);
 
 				// TODO Convert this code into correct functions - basically
 				// treating it as one player.
-				if (shipAtPos == 1) {
-					paint = getPlayer1Paint();
-				} else if (shipAtPos == 2) {
-					paint = getPlayer2Paint();
+				if (actionAtPos == 1) {
+					paint = getShipPaint();
+				} else if (actionAtPos == 2) {
+					paint = getMissPaint();
+				} else if (actionAtPos == 3) {
+					paint = getHitPaint();
 				} else {
 					paint = getBGPaint();
 				}
@@ -66,7 +68,9 @@ public class BoardViewShips extends BoardView {
 			return true;
 		}
 
-		private int currentPlayer = 1;
+		//private int currentPlayer = 1;
+		
+		private int[] action = {1,2,3};
 
 		// TODO Move change player stuff to Game.java
 
@@ -87,15 +91,30 @@ public class BoardViewShips extends BoardView {
 			touchedRow = (int) Math.floor(touchY
 					/ ((separator + diameter) * Game.DEFAULT_ROWS) * 10);
 
-			if (bGame.shipCount[0] >= 0){
-				if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player is clicking inside the grid
-					if (bGame.getPlayer1Target(touchedColumn, touchedRow) == 0) {
-						bGame.shipPlace(touchedColumn, touchedRow, currentPlayer);
-						
+			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player
+															// is clicking
+															// inside the grid
+				if (bGame.shipCount[0] >= 0) {
+					if (bGame.getPlayer1Target(touchedColumn, touchedRow) != 1) {
+						bGame.shipPlace(touchedColumn, touchedRow, action[0]);
+
 						bGame.shipCount[0]--;
 					}
+				} else {
+					if (bGame.getPlayer1Target(touchedColumn, touchedRow) == 1){
+						
+						bGame.shipPlace(touchedColumn, touchedRow, action[2]); //ship hit
+						
+					} else if (bGame.getPlayer1Target(touchedColumn, touchedRow) != 2 
+							&& bGame.getPlayer1Target(touchedColumn, touchedRow) != 3) {
+						
+								bGame.shipPlace(touchedColumn, touchedRow, action[1]); //ship missed
+					}
 				}
+				
 			}
+			
+			
 
 			// TODO Add Change of player method in which activity is changed
 //			float ls = separator + (diameter + separator) * touchedColumn; // left

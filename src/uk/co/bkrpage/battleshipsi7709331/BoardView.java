@@ -16,9 +16,13 @@ public class BoardView extends View {
 
 	public static final double SEPARATOR_RATIO = 0.025;
 
-	Game bGame = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS, Game.PLAYERS);
+	static Game bGame = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS, Game.PLAYERS);
 
 	private Paint gridPaint;
+	private Paint shipPaint;
+	private Paint missPaint;
+	private Paint hitPaint;
+	
 	private Paint player1Paint;
 	private Paint player2Paint;
 	private Paint bGPaint;
@@ -42,6 +46,19 @@ public class BoardView extends View {
 		gridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		gridPaint.setStyle(Paint.Style.FILL);
 		gridPaint.setColor(Color.WHITE);
+		
+		shipPaint = new Paint();
+		shipPaint.setStyle(Paint.Style.FILL);
+		shipPaint.setColor(Color.DKGRAY);
+		
+		missPaint = new Paint();
+		missPaint.setStyle(Paint.Style.FILL);
+		missPaint.setColor(Color.RED);
+		
+		hitPaint = new Paint();
+		hitPaint.setStyle(Paint.Style.FILL);
+		hitPaint.setColor(Color.GREEN);
+		
 
 		player1Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		player1Paint.setStyle(Paint.Style.FILL);
@@ -91,6 +108,38 @@ public class BoardView extends View {
 	}
 
 	public void setBGPaint(Paint bGPaint) {
+		this.bGPaint = bGPaint;
+	}
+
+	public Paint getShipPaint() {
+		return shipPaint;
+	}
+
+	public void setShipPaint(Paint shipPaint) {
+		this.shipPaint = shipPaint;
+	}
+
+	public Paint getMissPaint() {
+		return missPaint;
+	}
+
+	public void setMissPaint(Paint missPaint) {
+		this.missPaint = missPaint;
+	}
+
+	public Paint getHitPaint() {
+		return hitPaint;
+	}
+
+	public void setHitPaint(Paint hitPaint) {
+		this.hitPaint = hitPaint;
+	}
+
+	public Paint getbGPaint() {
+		return bGPaint;
+	}
+
+	public void setbGPaint(Paint bGPaint) {
 		this.bGPaint = bGPaint;
 	}
 

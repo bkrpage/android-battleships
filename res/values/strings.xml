@@ -8,6 +8,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_intermediate">IntermediateActivity</string>
     <string name="app_author">Bradley Page (i7709331)</string>
-    <string name="title_activity_ship__placement">Ship Placement</string>
+    <string name="title_activity_ship_placement">SHip Placement</string>
 
 </resources>

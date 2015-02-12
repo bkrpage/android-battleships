@@ -19,7 +19,7 @@
         </activity>
         <activity
             android:name=".Ship_Placement"
-            android:label="@string/title_activity_ship__placement" >
+            android:label="@string/title_activity_ship_placement" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
