@@ -14,7 +14,9 @@ public class Game {
 	private final int[][] player1Grid;
 	private final int[][] player2Grid;
 	
-	int shipCount[];
+	private int shipCount[];
+	
+	private Ship[] ship;
 	
 	//private int currentPlayer;
 	//TODO Cannibalise this and make into different classes i.e. ShipPlace.java shots.java
@@ -26,10 +28,10 @@ public class Game {
 		//currentPlayer = 1;
 		player1Grid = new int[columns][rows];
 		player2Grid = new int[columns][rows];
-		shipCount = new int[players];
+		setShipCount(new int[players]);
 		
-		for (int i = 0; i < shipCount.length; i++){
-			shipCount[i] = 4;
+		for (int i = 0; i < getShipCount().length; i++){
+			getShipCount()[i] = 4;
 		}
 	}
 	
@@ -47,6 +49,10 @@ public class Game {
 
 	public int getPlayer2Grid(int column, int row) {
 		return player2Grid[column][row];
+	}
+	
+	public void setShip(int pos, int x, int y, int size, boolean horiz ){
+		ship[pos] = new Ship(x, y, size, horiz);
 	}
 
 	public boolean touchGrid(int column, int row, int action) {
@@ -100,12 +106,20 @@ public class Game {
 	}
 	
 	public int getShipCountLength(){
-		return shipCount.length;
+		return getShipCount().length;
 	}
 //	
 //	public void setShipCount(int i){
 //		shipCount = i;
 //	}
+
+	public int[] getShipCount() {
+		return shipCount;
+	}
+
+	public void setShipCount(int shipCount[]) {
+		this.shipCount = shipCount;
+	}
 	
 	//public void setShipPos(int row, int col){
 	//	ship[shipCount] = player; 
