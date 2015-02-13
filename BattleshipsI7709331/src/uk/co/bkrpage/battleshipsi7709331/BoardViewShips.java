@@ -53,7 +53,7 @@ public class BoardViewShips extends BoardView {
 			}
 		}
 
-		String strShipCount = Integer.toString(bGame.shipCount[0] + 1);
+		String strShipCount = Integer.toString(bGame.getShipCount()[0] + 1); 
 		// TODO Make array position dependant on the s=current player.
 
 		canvas.drawText("Battleships to place: " + strShipCount, 15,
@@ -96,12 +96,12 @@ public class BoardViewShips extends BoardView {
 			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player
 															// is clicking
 															// inside the grid
-				if (bGame.shipCount[0] >= 0) {
+				if (bGame.getShipCount()[0] >= 0) {
 					if (bGame.getPlayer1Grid(touchedColumn, touchedRow) != Game.ACTION_SHIP) {
 						//if 
 						bGame.touchGrid(touchedColumn, touchedRow, Game.ACTION_SHIP);
 
-						bGame.shipCount[0]--;
+						bGame.getShipCount()[0]--;
 						
 						Toast toast = Toast.makeText(getContext(), "Ship Placed", Toast.LENGTH_SHORT);
 						toast.show();

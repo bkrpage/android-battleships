@@ -75,6 +75,7 @@ public class BoardView extends View {
 		textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		textPaint.setColor(Color.RED);
 		textPaint.setTypeface(Typeface.DEFAULT);
+		textPaint.setTextSize(26);
 
 	}
 

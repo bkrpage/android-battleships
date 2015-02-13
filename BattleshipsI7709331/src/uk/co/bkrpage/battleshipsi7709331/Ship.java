@@ -17,5 +17,39 @@ public class Ship {
 		size = this.size;
 		horiz = this.horiz;
 	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public int getCol() {
+		return col;
+	}
+
+	public void setCol(int col) {
+		this.col = col;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public boolean isHoriz() {
+		return horiz;
+	}
+
+	public void setHoriz(boolean horiz) {
+		this.horiz = horiz;
+	}
+	
+	
 	
 }
