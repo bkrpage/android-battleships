@@ -16,7 +16,7 @@ public class Game {
 	
 	private int shipCount[];
 	
-	private Ship[] ship;
+	//private Ship[] ship;
 	
 	//private int currentPlayer;
 	//TODO Cannibalise this and make into different classes i.e. ShipPlace.java shots.java
@@ -51,8 +51,34 @@ public class Game {
 		return player2Grid[column][row];
 	}
 	
-	public void setShip(int pos, int x, int y, int size, boolean horiz ){
-		ship[pos] = new Ship(x, y, size, horiz);
+	/**
+	 * @param pos	The array position of the ship
+	 * @param column		The x grid co-ordinate of the ship
+	 * @param row		The y grid co-ordinate of the ship
+	 * @param size	The size (in blocks) of the ship
+	 * @param horiz Is the ship Horizontal? x and y co-ords are the top left of the ship at all time.
+	 */
+	
+	public boolean setShip(int column, int row, int size, boolean horiz ){
+		boolean valid = true;
+		
+		// TODO move into own method isShipValid()
+		for (int i = 0; i <= size; i++){
+			if (horiz && (player1Grid[column + i][row] == ACTION_SHIP)){
+				valid = false;
+			} else if (!horiz && (player1Grid[column][row + i] == ACTION_SHIP)){
+				valid = false;
+			}
+		}
+		
+		for (int i = 0; i <= size; i++) {
+			if (horiz && valid) {
+				player1Grid[column + i][row] = ACTION_SHIP;
+			} else if (!horiz && valid) {
+				player1Grid[column][row + i] = ACTION_SHIP;
+			}
+		}
+		return valid;
 	}
 
 	public boolean touchGrid(int column, int row, int action) {
