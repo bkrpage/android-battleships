@@ -11,10 +11,58 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <Button
-        android:id="@+id/btnNextPlayer"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello" />
+        android:orientation="horizontal"
+        tools:context="${relativePackage}.${activityClass}" >
+        
+        <Button
+	        android:id="@+id/btnShip1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/ship1"
+	        style="?android:attr/buttonStyleSmall" />
+	    
+	    <Button
+	        android:id="@+id/btnShip2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/ship2"
+	        style="?android:attr/buttonStyleSmall" />
+
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:context="${relativePackage}.${activityClass}" >
+	    
+	    
+	    
+	    <Button
+	        android:id="@+id/btnShip3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/ship3"
+	        style="?android:attr/buttonStyleSmall" />
+	    
+	    <Button
+	        android:id="@+id/btnShip4"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/ship4"
+	        style="?android:attr/buttonStyleSmall" />
+	    
+	    <Button
+	        android:id="@+id/btnShip5"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/ship5"
+	        style="?android:attr/buttonStyleSmall" />
+    
+	</LinearLayout>
 
 </LinearLayout>

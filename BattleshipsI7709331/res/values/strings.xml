@@ -9,5 +9,10 @@
     <string name="title_activity_intermediate">IntermediateActivity</string>
     <string name="app_author">Bradley Page (i7709331)</string>
     <string name="title_activity_ship_placement">SHip Placement</string>
+    <string name="ship1">Carrier (5)</string>
+    <string name="ship2">Battleship (4)</string>
+    <string name="ship3">Cruiser (3)</string>
+    <string name="ship4">Submarine (3)</string>
+    <string name="ship5">Destroyer (2)</string>
 
 </resources>
