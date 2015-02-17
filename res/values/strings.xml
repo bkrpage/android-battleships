@@ -14,5 +14,10 @@
     <string name="ship3">Cruiser (3)</string>
     <string name="ship4">Submarine (3)</string>
     <string name="ship5">Destroyer (2)</string>
+    <string name="battleshipsRemaining"></string>
+    <string name="battleships_remaining">5 Battleships to place</string>
+    <string name="horizontal">Horizontal</string>
+    <string name="vertical">Vertical</string>
+    <string name="playGame">Play Game</string>
 
 </resources>

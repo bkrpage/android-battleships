@@ -13,6 +13,11 @@ public class BoardView extends View {
 		super(context, attrs);
 		init();
 	}
+	
+	@Override
+	public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+	    super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+	}
 
 	public static final double SEPARATOR_RATIO = 0.025;
 
