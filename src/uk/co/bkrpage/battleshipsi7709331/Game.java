@@ -1,5 +1,9 @@
 package uk.co.bkrpage.battleshipsi7709331;
 
+import java.util.Random;
+
+import android.widget.Toast;
+
 public class Game {
 	public static final int DEFAULT_COLUMNS = 10;
 	public static final int DEFAULT_ROWS = 10;
@@ -75,18 +79,34 @@ public class Game {
 	 * @param horiz Is the ship Horizontal? x and y co-ords are the top left of the ship at all time.
 	 */
 	
-	public void randomShips(){
+	public void placeRandomShips(){
+		Random rand = new Random();
 		
+		Toast toast = Toast.makeText(getContext(),
+				"Ship Placed", Toast.LENGTH_SHORT);
+		toast.show();
+		
+		for (int i = 0; i < 5; i++){
+			int randCol = rand.nextInt(9);
+			int randRow = rand.nextInt(9);
+			boolean randBool = rand.nextBoolean();
+			
+			if (i > 1){
+				if (setShip(randCol, randRow, i + 1, randBool, 2)){
+					
+				}
+			} else {
+				setShip(randCol, randRow, i + 2, randBool, 2);
+			}
+		}
 	}
 	
-	public boolean setShip(int column, int row, int size, boolean horiz){
-		boolean valid = false;
+	public boolean isShipValid(int column, int row, int size, boolean horiz, int player){
+		boolean valid = true;
 		
-		// TODO move into own method isShipValid()
-		if (size > 0){
-			valid = true;
-			
-			for (int i = 0; i <= size; i++) {
+		for (int i = 0; i <= size; i++) {
+			if (player == 1) 
+			{
 				if ((horiz && column + i >= 10)
 						|| (horiz && (player1Grid[column + i][row] == ACTION_SHIP))) {
 					valid = false;
@@ -94,13 +114,47 @@ public class Game {
 						|| (!horiz && (player1Grid[column][row + i] == ACTION_SHIP))) {
 					valid = false;
 				}
+			} 
+			else if (player == 2)
+			{
+				if ((horiz && column + i >= 10)
+						|| (horiz && (player2Grid[column + i][row] == ACTION_SHIP))) 
+				{
+					valid = false;
+				} 
+				else if ((!horiz && row + i >= 10)
+						|| (!horiz && (player2Grid[column][row + i] == ACTION_SHIP))) 
+				{
+					valid = false;
+				}
 			}
+		}
+		
+		return valid;
+	}
+	
+	public boolean setShip(int column, int row, int size, boolean horiz, int player){
+		boolean valid = false;
+		
+		// TODO move into own method isShipValid()
+		if (size > 0){
+			valid = true;
+			
+			valid = isShipValid(column, row, size, horiz, player);
 
 			for (int i = 0; i <= size; i++) {
-				if (horiz && valid) {
-					player1Grid[column + i][row] = ACTION_SHIP;
-				} else if (!horiz && valid) {
-					player1Grid[column][row + i] = ACTION_SHIP;
+				if (player == 1) {
+					if (horiz && valid) {
+						player1Grid[column + i][row] = ACTION_SHIP;
+					} else if (!horiz && valid) {
+						player1Grid[column][row + i] = ACTION_SHIP;
+					}
+				} else if (player == 2){
+					if (horiz && valid) {
+						player2Grid[column + i][row] = ACTION_SHIP;
+					} else if (!horiz && valid) {
+						player2Grid[column][row + i] = ACTION_SHIP;
+					}
 				}
 			}
 		}
@@ -110,8 +164,8 @@ public class Game {
 	public boolean touchGrid(int column, int row, int action) {
 		for (int iRow = 0; iRow < bRows; ++iRow) {
 			for (int jCol = 0; jCol < bColumns; jCol++) {
-				if (player1Grid[column][row] == 0 || player1Grid[column][row] == ACTION_SHIP) { // TODO Move the ACTION_SHIP side to somewhere else.
-					player1Grid[column][row] = action;
+				if (player2Grid[column][row] == 0 || player2Grid[column][row] == ACTION_SHIP) { // TODO Move the ACTION_SHIP side to somewhere else.
+					player2Grid[column][row] = action;
 					return true;
 				}
 			}

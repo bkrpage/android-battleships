@@ -101,7 +101,7 @@ public class BoardViewShips extends BoardView {
 						// This code below to be replaced with setship 
 						//bGame.touchGrid(touchedColumn, touchedRow, Game.ACTION_SHIP);
 												
-						if (bGame.setShip(touchedColumn, touchedRow, bGame.getShipSize(), bGame.getShipOrientation())) {
+						if (bGame.setShip(touchedColumn, touchedRow, bGame.getShipSize(), bGame.getShipOrientation(), 1)) {
 							bGame.getShipCount()[0]--;
 
 							Toast toast = Toast.makeText(getContext(),
