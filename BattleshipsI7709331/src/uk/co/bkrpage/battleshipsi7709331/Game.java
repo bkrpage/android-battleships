@@ -8,6 +8,9 @@ public class Game {
 	public static final int ACTION_HIT = 3;
 	public static final int ACTION_MISS = 2;
 	public static final int ACTION_SHIP = 1;
+	
+	public static final boolean HORIZONTAL = true;
+	public static final boolean VERTICAL = false;
 
 	private final int bColumns;
 	private final int bRows;
@@ -16,8 +19,12 @@ public class Game {
 	
 	private int shipCount[];
 	
-	//private Ship[] ship;
-	
+	private static int shipSize = 0;
+	private static boolean shipOrientation = true;
+//
+//	private static boolean[] player1ShipSet;
+//	private static boolean[] player2ShipSet;
+		
 	//private int currentPlayer;
 	//TODO Cannibalise this and make into different classes i.e. ShipPlace.java shots.java
 	
@@ -28,7 +35,16 @@ public class Game {
 		//currentPlayer = 1;
 		player1Grid = new int[columns][rows];
 		player2Grid = new int[columns][rows];
-		setShipCount(new int[players]);
+		shipCount = new int[players];
+
+//		player1ShipSet = new boolean[5];
+//		player2ShipSet = new boolean[5];
+//
+//		for(int i = 0; i <= 5; i++){
+//			player1ShipSet[i] = false;
+//			player2ShipSet[i] = false;
+//		}
+		
 		
 		for (int i = 0; i < getShipCount().length; i++){
 			getShipCount()[i] = 4;
@@ -59,23 +75,33 @@ public class Game {
 	 * @param horiz Is the ship Horizontal? x and y co-ords are the top left of the ship at all time.
 	 */
 	
-	public boolean setShip(int column, int row, int size, boolean horiz ){
-		boolean valid = true;
+	public void randomShips(){
+		
+	}
+	
+	public boolean setShip(int column, int row, int size, boolean horiz){
+		boolean valid = false;
 		
 		// TODO move into own method isShipValid()
-		for (int i = 0; i <= size; i++){
-			if (horiz && (player1Grid[column + i][row] == ACTION_SHIP)){
-				valid = false;
-			} else if (!horiz && (player1Grid[column][row + i] == ACTION_SHIP)){
-				valid = false;
+		if (size > 0){
+			valid = true;
+			
+			for (int i = 0; i <= size; i++) {
+				if ((horiz && column + i >= 10)
+						|| (horiz && (player1Grid[column + i][row] == ACTION_SHIP))) {
+					valid = false;
+				} else if ((!horiz && row + i >= 10)
+						|| (!horiz && (player1Grid[column][row + i] == ACTION_SHIP))) {
+					valid = false;
+				}
 			}
-		}
-		
-		for (int i = 0; i <= size; i++) {
-			if (horiz && valid) {
-				player1Grid[column + i][row] = ACTION_SHIP;
-			} else if (!horiz && valid) {
-				player1Grid[column][row + i] = ACTION_SHIP;
+
+			for (int i = 0; i <= size; i++) {
+				if (horiz && valid) {
+					player1Grid[column + i][row] = ACTION_SHIP;
+				} else if (!horiz && valid) {
+					player1Grid[column][row + i] = ACTION_SHIP;
+				}
 			}
 		}
 		return valid;
@@ -92,22 +118,6 @@ public class Game {
 		}
 		return false;
 	}
-
-//	public int getShip(int column, int row) {
-//		return bShips[column][row];
-//	}
-//	
-//	public boolean shipPlace(int column, int row, int action) {
-//		for (int iRow = 0; iRow < bRows; ++iRow) {
-//			for (int jCol = 0; jCol < bColumns; jCol++) {
-//				if (player1Grid[column][row] == 0) {
-//					player1Grid[column][row] = action;
-//					return true;
-//				}
-//			}
-//		}
-//		return false;
-//	}
 	
 //	public void changePlayerFrom(int player){
 //		
@@ -134,10 +144,6 @@ public class Game {
 	public int getShipCountLength(){
 		return getShipCount().length;
 	}
-//	
-//	public void setShipCount(int i){
-//		shipCount = i;
-//	}
 
 	public int[] getShipCount() {
 		return shipCount;
@@ -146,10 +152,38 @@ public class Game {
 	public void setShipCount(int shipCount[]) {
 		this.shipCount = shipCount;
 	}
-	
-	//public void setShipPos(int row, int col){
-	//	ship[shipCount] = player; 
-	//}
+
+	public int getShipSize() {
+		return shipSize;
+	}
+
+	public static void setShipSize(int size) {
+		shipSize = size;
+	}
+
+	public boolean getShipOrientation() {
+		return shipOrientation;
+	}
+
+	public static void setShipOrientation(boolean orient) {
+		shipOrientation= orient;
+	}
+
+//	public boolean[] getPlayer1ShipSet() {
+//		return player1ShipSet;
+//	}
+//
+//	public static void setPlayer1ShipSet(int pos, boolean set) {
+//		player1ShipSet[pos] = set;
+//	}
+//
+//	public boolean[] getPlayer2ShipSet() {
+//		return player2ShipSet;
+//	}
+//
+//	public static void setPlayer2ShipSet(int pos, boolean set) {
+//		player2ShipSet[pos] = set;
+//	}
 	
 	
 }
