@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 public class BoardViewGame extends BoardView {
 
@@ -22,16 +23,21 @@ public class BoardViewGame extends BoardView {
 		float diameter = calcDiam();
 		float separator = (float) (diameter * SEPARATOR_RATIO);
 
-		int targetAtPos;
+		int actionAtPos;
 
 		for (int col = 0; col < bGame.getColumns(); col++) {
 			for (int row = 0; row < bGame.getRows(); row++) {
 				Paint paint;
-				targetAtPos = bGame.getPlayer1Grid(col, row);
-				if (targetAtPos == 1) {
-					paint = getPlayer1Paint();
-				} else if (targetAtPos == 2) {
-					paint = getPlayer2Paint();
+				actionAtPos = bGame.getPlayer2Grid(col, row);
+
+				// TODO Convert this code into correct functions - basically
+				// treating it as one player.
+				if (actionAtPos == Game.ACTION_SHIP) {
+					paint = getShipPaint();
+				} else if (actionAtPos == Game.ACTION_MISS) {
+					paint = getMissPaint();
+				} else if (actionAtPos == Game.ACTION_HIT) {
+					paint = getHitPaint();
 				} else {
 					paint = getBGPaint();
 				}
@@ -73,23 +79,30 @@ public class BoardViewGame extends BoardView {
 					/ ((separator + diameter) * Game.DEFAULT_COLUMNS) * 10);
 			touchedRow = (int) Math.floor(touchY
 					/ ((separator + diameter) * Game.DEFAULT_ROWS) * 10);
-
-//			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player is clicking inside the grid - it crashes if not  here..
-//				if (bGame.getPlayer1Target(touchedColumn, touchedRow) == 0){
-//					bGame.playTarget(touchedColumn, touchedRow, bGame.getPlayer());
-//					
-//					bGame.changePlayerFrom(bGame.getPlayer());
-//				}
-//			}
-
-			// TODO Add Change of player method in which activity is changed
 			
-			float ls = separator + (diameter + separator) * touchedColumn; // left
-			float ts = separator + (diameter + separator) * touchedRow; // top
-			float rs = separator + diameter + (diameter + separator) * touchedColumn; // right
-			float bs = separator + diameter + (diameter + separator) * touchedRow; // bottom
 
-			invalidate((int)ls,(int)ts,(int)rs,(int)bs);
+			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player
+															// is clicking
+															// inside the grid
+				if (bGame.getPlayer2Grid(touchedColumn, touchedRow) == Game.ACTION_SHIP) {
+
+					bGame.touchGrid(touchedColumn, touchedRow, Game.ACTION_HIT); // ship
+																					// hit
+
+					Toast toast = Toast.makeText(getContext(), "Ship Hit",
+							Toast.LENGTH_SHORT);
+					toast.show();
+
+				} else if (bGame.getPlayer2Grid(touchedColumn, touchedRow) != Game.ACTION_MISS
+						&& bGame.getPlayer2Grid(touchedColumn, touchedRow) != Game.ACTION_HIT) {
+
+					bGame.touchGrid(touchedColumn, touchedRow, Game.ACTION_MISS); // ship
+																					// missed
+				}
+			}
+
+			//invalidate((int)ls,(int)ts,(int)rs,(int)bs);
+			invalidate();
 			return false;
 		}
 	}

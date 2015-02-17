@@ -3,7 +3,7 @@ package uk.co.bkrpage.battleshipsi7709331;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
+//import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -21,7 +21,7 @@ public class BoardView extends View {
 
 	public static final double SEPARATOR_RATIO = 0.025;
 
-	Game bGame = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS, Game.PLAYERS);
+	protected static Game bGame;
 
 	private Paint gridPaint;
 	private Paint shipPaint;
@@ -32,7 +32,6 @@ public class BoardView extends View {
 	private Paint player2Paint;
 	private Paint bGPaint;
 	
-	protected Paint textPaint;
 
 	// The calculations to find the best dimensions for the grid.
 	float calcDiam(){
@@ -47,6 +46,10 @@ public class BoardView extends View {
 	}
 
 	private void init(){
+		
+		if(bGame == null){
+			 bGame = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS, Game.PLAYERS);
+		}
 
 		gridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		gridPaint.setStyle(Paint.Style.FILL);
@@ -76,11 +79,6 @@ public class BoardView extends View {
 		bGPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		bGPaint.setStyle(Paint.Style.FILL);
 		bGPaint.setColor(0xFF00C3FF);
-		
-		textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		textPaint.setColor(Color.RED);
-		textPaint.setTypeface(Typeface.DEFAULT);
-		textPaint.setTextSize(26);
 
 	}
 
