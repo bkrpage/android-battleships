@@ -2,19 +2,12 @@ package uk.co.bkrpage.battleshipsi7709331;
 
 import java.util.Random;
 
-import android.widget.Toast;
-
 public class Game {
-	public static final int DEFAULT_COLUMNS = 10;
-	public static final int DEFAULT_ROWS = 10;
-	public static final int PLAYERS = 2;
+	public static final int DEFAULT_COLUMNS = 10, DEFAULT_ROWS = 10, PLAYERS = 2;
 	
-	public static final int ACTION_HIT = 3;
-	public static final int ACTION_MISS = 2;
-	public static final int ACTION_SHIP = 1;
+	public static final int ACTION_HIT = 3, ACTION_MISS = 2, ACTION_SHIP = 1;
 	
-	public static final boolean HORIZONTAL = true;
-	public static final boolean VERTICAL = false;
+	public static final boolean HORIZONTAL = true, VERTICAL = false;
 
 	private final int bColumns;
 	private final int bRows;
@@ -71,35 +64,27 @@ public class Game {
 		return player2Grid[column][row];
 	}
 	
-	/**
-	 * @param pos	The array position of the ship
-	 * @param column		The x grid co-ordinate of the ship
-	 * @param row		The y grid co-ordinate of the ship
-	 * @param size	The size (in blocks) of the ship
-	 * @param horiz Is the ship Horizontal? x and y co-ords are the top left of the ship at all time.
-	 */
 	
-	public void placeRandomShips(){
+	public void placeRandomShip(int size){
 		Random rand = new Random();
 		
-		Toast toast = Toast.makeText(getContext(),
-				"Ship Placed", Toast.LENGTH_SHORT);
-		toast.show();
-		
-		for (int i = 0; i < 5; i++){
-			int randCol = rand.nextInt(9);
-			int randRow = rand.nextInt(9);
-			boolean randBool = rand.nextBoolean();
+		int randCol = rand.nextInt(9);
+		int randRow = rand.nextInt(9);
+		boolean randBool = rand.nextBoolean();
 			
-			if (i > 1){
-				if (setShip(randCol, randRow, i + 1, randBool, 2)){
-					
-				}
-			} else {
-				setShip(randCol, randRow, i + 2, randBool, 2);
-			}
+		while (!setShip(randCol, randRow, size, randBool, 2)){
+			break;
 		}
+			
 	}
+	
+	/**
+	 * @param column	The x grid co-ordinate of the ship
+	 * @param row		The y grid co-ordinate of the ship
+	 * @param size		The size (in blocks) of the ship
+	 * @param horiz 	Is the ship Horizontal? x and y co-ords are the top left of the ship at all time.
+	 * @param player	The player of the board that is being checked.
+	 */
 	
 	public boolean isShipValid(int column, int row, int size, boolean horiz, int player){
 		boolean valid = true;
