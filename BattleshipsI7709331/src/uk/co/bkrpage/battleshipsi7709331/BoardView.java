@@ -45,7 +45,7 @@ public class BoardView extends View {
 		return diameter;
 	}
 
-	private void init(){
+	public void init(){
 		
 		if(bGame == null){
 			 bGame = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS, Game.PLAYERS);

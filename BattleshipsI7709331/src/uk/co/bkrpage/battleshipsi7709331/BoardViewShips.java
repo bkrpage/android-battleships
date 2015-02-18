@@ -56,8 +56,6 @@ public class BoardViewShips extends BoardView {
 		//String strShipCount = Integer.toString(bGame.getShipCount()[0] + 1); 
 		// TODO Make array position dependent on the current player.
 
-		//canvas.drawText("Battleships to place: " + strShipCount, 15,
-				//((separator + diameter) * 10) + 30, textPaint);
 	}
 
 	// TODO add ship Placement.

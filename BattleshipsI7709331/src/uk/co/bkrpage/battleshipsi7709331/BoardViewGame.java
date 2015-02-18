@@ -1,5 +1,7 @@
 package uk.co.bkrpage.battleshipsi7709331;
 
+import java.util.Random;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,11 +12,49 @@ import android.view.MotionEvent;
 import android.widget.Toast;
 
 public class BoardViewGame extends BoardView {
+	
+	private boolean shipsSet = false;
 
 	public BoardViewGame(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	public void init(){
+		super.init();
+		
+//		if (!shipsSet){
+//			for (int i = 0; i <= 4 ; i++ ){
+//				bGame.placeRandomShip(3);
+//			}
+//			shipsSet = false;
+//		}
+		Random rand = new Random();
+		
+		int randCol = rand.nextInt(9);
+		int randRow = rand.nextInt(9);
+		boolean randBool = rand.nextBoolean();
+		
+		boolean[] shipIsOnGrid = new boolean[5];
+		
+		for (int i = 0; i < shipIsOnGrid.length; i++){
+		}
+		
+		
+		for (int i = 0; i < 5; i++){
+			shipIsOnGrid[i] = false;
+			
+			while (!shipIsOnGrid[i]) {
+				if (bGame.getPlayer2Grid(randCol, randRow) != Game.ACTION_SHIP) {										
+					if (bGame.setShip(randCol, randRow, 0, randBool, 2)) {
+						shipIsOnGrid[i] = true;
+					}
+				}
+			}
+		}
+	}
+	
 	
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
