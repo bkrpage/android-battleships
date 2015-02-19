@@ -66,15 +66,6 @@ public class BoardView extends View {
 		hitPaint = new Paint();
 		hitPaint.setStyle(Paint.Style.FILL);
 		hitPaint.setColor(Color.GREEN);
-		
-
-//		player1Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-//		player1Paint.setStyle(Paint.Style.FILL);
-//		player1Paint.setColor(Color.RED);
-//
-//		player2Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-//		player2Paint.setStyle(Paint.Style.FILL);
-//		player2Paint.setColor(Color.BLUE);
 
 		bGPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		bGPaint.setStyle(Paint.Style.FILL);

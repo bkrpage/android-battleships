@@ -19,5 +19,6 @@
     <string name="horizontal">Horizontal</string>
     <string name="vertical">Vertical</string>
     <string name="playGame">Play Game</string>
+    <string name="score">Your score is: 0</string>
 
 </resources>

@@ -8,6 +8,8 @@ public class Game {
 	public static final int ACTION_HIT = 3, ACTION_MISS = 2, ACTION_SHIP = 1;
 	
 	public static final boolean HORIZONTAL = true, VERTICAL = false;
+	
+	public static final int SCORE_HIT = 50, SCORE_MISS = -5;
 
 	private final int bColumns;
 	private final int bRows;
@@ -15,9 +17,12 @@ public class Game {
 	private final int[][] player2Grid;
 	
 	private int shipCount[];
+	private int[] shipBlocksSunk;
 	
 	private static int shipSize = 0;
 	private static boolean shipOrientation = true;
+	
+	private int gameScore;
 //
 //	private static boolean[] player1ShipSet;
 //	private static boolean[] player2ShipSet;
@@ -33,14 +38,7 @@ public class Game {
 		player1Grid = new int[columns][rows];
 		player2Grid = new int[columns][rows];
 		shipCount = new int[players];
-
-//		player1ShipSet = new boolean[5];
-//		player2ShipSet = new boolean[5];
-//
-//		for(int i = 0; i <= 5; i++){
-//			player1ShipSet[i] = false;
-//			player2ShipSet[i] = false;
-//		}
+		gameScore = 0;
 		
 		
 		for (int i = 0; i < getShipCount().length; i++){
@@ -70,10 +68,12 @@ public class Game {
 		
 		int randCol = rand.nextInt(9);
 		int randRow = rand.nextInt(9);
-		boolean randBool = rand.nextBoolean();
-			
+		boolean randBool = rand.nextBoolean();		
+		
 		while (!setShip(randCol, randRow, size, randBool, 2)){
-			break;
+			randCol = rand.nextInt(9);
+			randRow = rand.nextInt(9);
+			randBool = rand.nextBoolean();
 		}
 			
 	}
@@ -85,7 +85,6 @@ public class Game {
 	 * @param horiz 	Is the ship Horizontal? x and y co-ords are the top left of the ship at all time.
 	 * @param player	The player of the board that is being checked.
 	 */
-	
 	public boolean isShipValid(int column, int row, int size, boolean horiz, int player){
 		boolean valid = true;
 		
@@ -121,25 +120,20 @@ public class Game {
 	public boolean setShip(int column, int row, int size, boolean horiz, int player){
 		boolean valid = false;
 		
-		// TODO move into own method isShipValid()
-		if (size > 0){
-			valid = true;
-			
-			valid = isShipValid(column, row, size, horiz, player);
+		valid = isShipValid(column, row, size, horiz, player);
 
-			for (int i = 0; i <= size; i++) {
-				if (player == 1) {
-					if (horiz && valid) {
-						player1Grid[column + i][row] = ACTION_SHIP;
-					} else if (!horiz && valid) {
-						player1Grid[column][row + i] = ACTION_SHIP;
-					}
-				} else if (player == 2){
-					if (horiz && valid) {
-						player2Grid[column + i][row] = ACTION_SHIP;
-					} else if (!horiz && valid) {
-						player2Grid[column][row + i] = ACTION_SHIP;
-					}
+		for (int i = 0; i <= size; i++) {
+			if (player == 1) {
+				if (horiz && valid) {
+					player1Grid[column + i][row] = ACTION_SHIP;
+				} else if (!horiz && valid) {
+					player1Grid[column][row + i] = ACTION_SHIP;
+				}
+			} else if (player == 2) {
+				if (horiz && valid) {
+					player2Grid[column + i][row] = ACTION_SHIP;
+				} else if (!horiz && valid) {
+					player2Grid[column][row + i] = ACTION_SHIP;
 				}
 			}
 		}
@@ -149,7 +143,7 @@ public class Game {
 	public boolean touchGrid(int column, int row, int action) {
 		for (int iRow = 0; iRow < bRows; ++iRow) {
 			for (int jCol = 0; jCol < bColumns; jCol++) {
-				if (player2Grid[column][row] == 0 || player2Grid[column][row] == ACTION_SHIP) { // TODO Move the ACTION_SHIP side to somewhere else.
+				if (player2Grid[column][row] == 0 || player2Grid[column][row] == ACTION_SHIP) { 
 					player2Grid[column][row] = action;
 					return true;
 				}
@@ -206,6 +200,18 @@ public class Game {
 
 	public static void setShipOrientation(boolean orient) {
 		shipOrientation= orient;
+	}
+
+	public int getGameScore() {
+		return gameScore;
+	}
+
+	public void setGameScore(int gameScore) {
+		this.gameScore = gameScore;
+	}
+	
+	public void addToGameScore(int addition){
+		this.gameScore += addition;
 	}
 
 //	public boolean[] getPlayer1ShipSet() {

@@ -2,11 +2,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="${relativePackage}.${activityClass}" >
 
     <uk.co.bkrpage.battleshipsi7709331.BoardViewGame
         android:id="@+id/boardViewGame1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <!-- <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+	    android:columnCount="2"
+	    android:rowCount="2" >
+    </GridLayout>-->
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/score" />
 
 </LinearLayout>
