@@ -34,7 +34,6 @@ public class Game {
 		//currentPlayer = 1;
 		player1Grid = new int[columns][rows];
 		player2Grid = new int[columns][rows];
-//		shipCount = new int[players];
 		gameScore = 0;
 		
 		shipBlocksSunk = 0;
@@ -53,7 +52,6 @@ public class Game {
 		}
 
 		gameScore = 0;
-		
 		shipBlocksSunk = 0;
 	}
 	
@@ -236,22 +234,6 @@ public class Game {
 	public void sinkShipBlock(){
 		this.shipBlocksSunk++;
 	}
-
-//	public boolean[] getPlayer1ShipSet() {
-//		return player1ShipSet;
-//	}
-//
-//	public static void setPlayer1ShipSet(int pos, boolean set) {
-//		player1ShipSet[pos] = set;
-//	}
-//
-//	public boolean[] getPlayer2ShipSet() {
-//		return player2ShipSet;
-//	}
-//
-//	public static void setPlayer2ShipSet(int pos, boolean set) {
-//		player2ShipSet[pos] = set;
-//	}
 	
 	
 }
