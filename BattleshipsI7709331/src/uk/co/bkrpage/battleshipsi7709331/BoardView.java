@@ -3,7 +3,6 @@ package uk.co.bkrpage.battleshipsi7709331;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
-//import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -16,21 +15,14 @@ public class BoardView extends View {
 	
 	@Override
 	public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-	    super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+	    super.onMeasure(widthMeasureSpec, widthMeasureSpec + 50);
 	}
 
 	public static final double SEPARATOR_RATIO = 0.025;
 
-	protected static Game bGame;
+	protected static Game game;
 
-	private Paint gridPaint;
-	private Paint shipPaint;
-	private Paint missPaint;
-	private Paint hitPaint;
-	
-	private Paint player1Paint;
-	private Paint player2Paint;
-	private Paint bGPaint;
+	private Paint gridPaint, shipPaint, missPaint, hitPaint, bGPaint, textPaint;
 	
 
 	// The calculations to find the best dimensions for the grid.
@@ -47,8 +39,8 @@ public class BoardView extends View {
 
 	public void init(){
 		
-		if(bGame == null){
-			 bGame = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS, Game.PLAYERS);
+		if(game == null){
+			 game = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS, Game.PLAYERS);
 		}
 
 		gridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -65,11 +57,15 @@ public class BoardView extends View {
 		
 		hitPaint = new Paint();
 		hitPaint.setStyle(Paint.Style.FILL);
-		hitPaint.setColor(Color.GREEN);
+		hitPaint.setColor(0xFF5DB30C);
 
 		bGPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		bGPaint.setStyle(Paint.Style.FILL);
 		bGPaint.setColor(0xFF00C3FF);
+		
+		textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		textPaint.setColor(0xFF000000);
+		textPaint.setTextSize(25);
 
 	}
 
@@ -79,22 +75,6 @@ public class BoardView extends View {
 
 	public void setGridPaint(Paint gridPaint) {
 		this.gridPaint = gridPaint;
-	}
-
-	public Paint getPlayer1Paint() {
-		return player1Paint;
-	}
-
-	public void setPlayer1Paint(Paint player1Paint) {
-		this.player1Paint = player1Paint;
-	}
-
-	public Paint getPlayer2Paint() {
-		return player2Paint;
-	}
-
-	public void setPlayer2Paint(Paint player2Paint) {
-		this.player2Paint = player2Paint;
 	}
 
 	public Paint getBGPaint() {
@@ -135,6 +115,14 @@ public class BoardView extends View {
 
 	public void setbGPaint(Paint bGPaint) {
 		this.bGPaint = bGPaint;
+	}
+
+	public Paint getTextPaint() {
+		return textPaint;
+	}
+
+	public void setTextPaint(Paint textPaint) {
+		this.textPaint = textPaint;
 	}
 
 

@@ -6,10 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class BoardViewGame extends BoardView {
@@ -28,9 +25,9 @@ public class BoardViewGame extends BoardView {
 		if (!shipsSet){
 			for (int i = 0; i <= 4 ; i++ ){
 				if (i <= 1){
-					bGame.placeRandomShip(i + 1);
+					game.placeRandomShip(i + 1);
 				} else {
-					bGame.placeRandomShip(i);
+					game.placeRandomShip(i);
 				}
 			}
 			shipsSet = true;
@@ -47,10 +44,10 @@ public class BoardViewGame extends BoardView {
 
 		int actionAtPos;
 
-		for (int col = 0; col < bGame.getColumns(); col++) {
-			for (int row = 0; row < bGame.getRows(); row++) {
+		for (int col = 0; col < game.getColumns(); col++) {
+			for (int row = 0; row < game.getRows(); row++) {
 				Paint paint;
-				actionAtPos = bGame.getPlayer2Grid(col, row);
+				actionAtPos = game.getPlayer2Grid(col, row);
 
 				// TODO Convert this code into correct functions - basically
 				// treating it as one player.
@@ -74,6 +71,9 @@ public class BoardViewGame extends BoardView {
 				canvas.drawRect(ls, ts, rs, bs, paint);
 			}
 		}
+		
+		canvas.drawText("Your score is: " + game.getGameScore(), 15, (separator+diameter)* 10 + 25, getTextPaint());
+		
 	}
 
 	class mListener extends GestureDetector.SimpleOnGestureListener {
@@ -95,8 +95,6 @@ public class BoardViewGame extends BoardView {
 			float touchX = e.getX();
 			float touchY = e.getY();
 			
-			TextView score = (TextView) findViewById(R.id.score);
-			
 			touchedColumn = (int) Math.floor(touchX
 					/ ((separator + diameter) * Game.DEFAULT_COLUMNS) * 10);
 			touchedRow = (int) Math.floor(touchY
@@ -106,24 +104,33 @@ public class BoardViewGame extends BoardView {
 			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player
 															// is clicking
 															// inside the grid
-				if (bGame.getPlayer2Grid(touchedColumn, touchedRow) == Game.ACTION_SHIP) {
+				if (game.getPlayer2Grid(touchedColumn, touchedRow) == Game.ACTION_SHIP) {
 
-					bGame.touchGrid(touchedColumn, touchedRow, Game.ACTION_HIT); // ship
+					game.touchGrid(touchedColumn, touchedRow, Game.ACTION_HIT); // ship
 																					// hit
-					bGame.addToGameScore(Game.SCORE_HIT);
-					score.setText(bGame.getGameScore());
+					game.addToGameScore(Game.SCORE_HIT);
+					game.sinkShipBlock();
 
-					Toast toast = Toast.makeText(getContext(), "Ship Hit",
-							Toast.LENGTH_SHORT);
-					toast.show();
+					if (game.getShipBlocksSunk() == 17) {
+						Toast toast = Toast.makeText(getContext(), "You have won this game!", Toast.LENGTH_LONG);
+						toast.show();
+						
+						invalidate();
+						
+						game.resetGame();
+						return false;
+						
+					} else {
+						Toast toast = Toast.makeText(getContext(), "Ship Hit", Toast.LENGTH_SHORT);
+						toast.show();
+					}
 
-				} else if (bGame.getPlayer2Grid(touchedColumn, touchedRow) != Game.ACTION_MISS
-						&& bGame.getPlayer2Grid(touchedColumn, touchedRow) != Game.ACTION_HIT) {
+				} else if (game.getPlayer2Grid(touchedColumn, touchedRow) != Game.ACTION_MISS
+						&& game.getPlayer2Grid(touchedColumn, touchedRow) != Game.ACTION_HIT) {
 
-					bGame.touchGrid(touchedColumn, touchedRow, Game.ACTION_MISS); // ship
+					game.touchGrid(touchedColumn, touchedRow, Game.ACTION_MISS); // ship
 
-					bGame.addToGameScore(Game.SCORE_MISS);
-					score.setText(bGame.getGameScore());
+					game.addToGameScore(Game.SCORE_MISS);
 				}
 			}
 
