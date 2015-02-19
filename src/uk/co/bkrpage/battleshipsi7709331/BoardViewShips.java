@@ -23,10 +23,10 @@ public class BoardViewShips extends BoardView {
 
 		int actionAtPos;
 
-		for (int col = 0; col < bGame.getColumns(); col++) {
-			for (int row = 0; row < bGame.getRows(); row++) {
+		for (int col = 0; col < game.getColumns(); col++) {
+			for (int row = 0; row < game.getRows(); row++) {
 				Paint paint;
-				actionAtPos = bGame.getPlayer1Grid(col, row);
+				actionAtPos = game.getPlayer1Grid(col, row);
 
 				// TODO Convert this code into correct functions - basically
 				// treating it as one player.
@@ -94,13 +94,13 @@ public class BoardViewShips extends BoardView {
 			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player
 															// is clicking
 															// inside the grid
-				if (bGame.getShipCount()[0] >= 0) {
-					if (bGame.getPlayer1Grid(touchedColumn, touchedRow) != Game.ACTION_SHIP) {
+				if (game.getShipCount()[0] >= 0) {
+					if (game.getPlayer1Grid(touchedColumn, touchedRow) != Game.ACTION_SHIP) {
 						// This code below to be replaced with setship 
 						//bGame.touchGrid(touchedColumn, touchedRow, Game.ACTION_SHIP);
 												
-						if (bGame.setShip(touchedColumn, touchedRow, bGame.getShipSize(), bGame.getShipOrientation(), 1)) {
-							bGame.getShipCount()[0]--;
+						if (game.setShip(touchedColumn, touchedRow, game.getShipSize(), game.getShipOrientation(), 1)) {
+							game.getShipCount()[0]--;
 
 							Toast toast = Toast.makeText(getContext(),
 									"Ship Placed", Toast.LENGTH_SHORT);
@@ -112,17 +112,17 @@ public class BoardViewShips extends BoardView {
 						}
 					}
 				} else {
-					if (bGame.getPlayer1Grid(touchedColumn, touchedRow) == Game.ACTION_SHIP){
+					if (game.getPlayer1Grid(touchedColumn, touchedRow) == Game.ACTION_SHIP){
 						
-						bGame.touchGrid(touchedColumn, touchedRow, Game.ACTION_HIT); //ship hit
+						game.touchGrid(touchedColumn, touchedRow, Game.ACTION_HIT); //ship hit
 						
 						Toast toast = Toast.makeText(getContext(), "Ship Hit", Toast.LENGTH_SHORT);
 						toast.show();
 						
-					} else if (bGame.getPlayer1Grid(touchedColumn, touchedRow) != Game.ACTION_MISS 
-							&& bGame.getPlayer1Grid(touchedColumn, touchedRow) != Game.ACTION_HIT) {
+					} else if (game.getPlayer1Grid(touchedColumn, touchedRow) != Game.ACTION_MISS 
+							&& game.getPlayer1Grid(touchedColumn, touchedRow) != Game.ACTION_HIT) {
 						
-								bGame.touchGrid(touchedColumn, touchedRow, Game.ACTION_MISS); //ship missed
+								game.touchGrid(touchedColumn, touchedRow, Game.ACTION_MISS); //ship missed
 					}
 				}
 				

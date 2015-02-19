@@ -11,47 +11,58 @@ public class Game {
 	
 	public static final int SCORE_HIT = 50, SCORE_MISS = -5;
 
-	private final int bColumns;
-	private final int bRows;
+	private final int setColumns;
+	private final int setRows;
 	private final int[][] player1Grid;
 	private final int[][] player2Grid;
 	
 	private int shipCount[];
-	private int[] shipBlocksSunk;
+	private int shipBlocksSunk;
 	
 	private static int shipSize = 0;
 	private static boolean shipOrientation = true;
 	
 	private int gameScore;
-//
-//	private static boolean[] player1ShipSet;
-//	private static boolean[] player2ShipSet;
 		
 	//private int currentPlayer;
 	//TODO Cannibalise this and make into different classes i.e. ShipPlace.java shots.java
 	
 	public Game(int columns, int rows, int players) {
-		bColumns = columns;
-		bRows = rows;
+		setColumns = columns;
+		setRows = rows;
 		// TODO Remove this 
 		//currentPlayer = 1;
 		player1Grid = new int[columns][rows];
 		player2Grid = new int[columns][rows];
-		shipCount = new int[players];
+//		shipCount = new int[players];
 		gameScore = 0;
 		
+		shipBlocksSunk = 0;
 		
-		for (int i = 0; i < getShipCount().length; i++){
-			getShipCount()[i] = 4;
+//		for (int i = 0; i < getShipCount().length; i++){
+//			getShipCount()[i] = 4;
+//		}
+	}
+	
+	public void resetGame(){
+		for (int i = 0; i < setColumns; i++){
+			for (int j = 0; j < setRows; j++){
+				player1Grid[i][j] = 0;
+				player2Grid[i][j] = 0;
+			}
 		}
+
+		gameScore = 0;
+		
+		shipBlocksSunk = 0;
 	}
 	
 	public int getColumns() {
-		return bColumns;
+		return setColumns;
 	}
 
 	public int getRows() {
-		return bRows;
+		return setRows;
 	}
 
 	public int getPlayer1Grid(int column, int row) {
@@ -141,8 +152,8 @@ public class Game {
 	}
 
 	public boolean touchGrid(int column, int row, int action) {
-		for (int iRow = 0; iRow < bRows; ++iRow) {
-			for (int jCol = 0; jCol < bColumns; jCol++) {
+		for (int iRow = 0; iRow < setRows; ++iRow) {
+			for (int jCol = 0; jCol < setColumns; jCol++) {
 				if (player2Grid[column][row] == 0 || player2Grid[column][row] == ACTION_SHIP) { 
 					player2Grid[column][row] = action;
 					return true;
@@ -212,6 +223,18 @@ public class Game {
 	
 	public void addToGameScore(int addition){
 		this.gameScore += addition;
+	}
+
+	public int getShipBlocksSunk() {
+		return shipBlocksSunk;
+	}
+
+	public void setShipBlocksSunk(int shipBlocksSunk) {
+		this.shipBlocksSunk = shipBlocksSunk;
+	}
+	
+	public void sinkShipBlock(){
+		this.shipBlocksSunk++;
 	}
 
 //	public boolean[] getPlayer1ShipSet() {
