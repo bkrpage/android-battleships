@@ -1,14 +1,15 @@
 package uk.co.bkrpage.battleshipsi7709331;
 
-import java.util.Random;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class BoardViewGame extends BoardView {
@@ -24,34 +25,15 @@ public class BoardViewGame extends BoardView {
 	public void init(){
 		super.init();
 		
-//		if (!shipsSet){
-//			for (int i = 0; i <= 4 ; i++ ){
-//				bGame.placeRandomShip(3);
-//			}
-//			shipsSet = false;
-//		}
-		Random rand = new Random();
-		
-		int randCol = rand.nextInt(9);
-		int randRow = rand.nextInt(9);
-		boolean randBool = rand.nextBoolean();
-		
-		boolean[] shipIsOnGrid = new boolean[5];
-		
-		for (int i = 0; i < shipIsOnGrid.length; i++){
-		}
-		
-		
-		for (int i = 0; i < 5; i++){
-			shipIsOnGrid[i] = false;
-			
-			while (!shipIsOnGrid[i]) {
-				if (bGame.getPlayer2Grid(randCol, randRow) != Game.ACTION_SHIP) {										
-					if (bGame.setShip(randCol, randRow, 0, randBool, 2)) {
-						shipIsOnGrid[i] = true;
-					}
+		if (!shipsSet){
+			for (int i = 0; i <= 4 ; i++ ){
+				if (i <= 1){
+					bGame.placeRandomShip(i + 1);
+				} else {
+					bGame.placeRandomShip(i);
 				}
 			}
+			shipsSet = true;
 		}
 	}
 	
@@ -72,9 +54,7 @@ public class BoardViewGame extends BoardView {
 
 				// TODO Convert this code into correct functions - basically
 				// treating it as one player.
-				if (actionAtPos == Game.ACTION_SHIP) {
-					paint = getShipPaint();
-				} else if (actionAtPos == Game.ACTION_MISS) {
+				if (actionAtPos == Game.ACTION_MISS) {
 					paint = getMissPaint();
 				} else if (actionAtPos == Game.ACTION_HIT) {
 					paint = getHitPaint();
@@ -114,7 +94,9 @@ public class BoardViewGame extends BoardView {
 
 			float touchX = e.getX();
 			float touchY = e.getY();
-
+			
+			TextView score = (TextView) findViewById(R.id.score);
+			
 			touchedColumn = (int) Math.floor(touchX
 					/ ((separator + diameter) * Game.DEFAULT_COLUMNS) * 10);
 			touchedRow = (int) Math.floor(touchY
@@ -128,6 +110,8 @@ public class BoardViewGame extends BoardView {
 
 					bGame.touchGrid(touchedColumn, touchedRow, Game.ACTION_HIT); // ship
 																					// hit
+					bGame.addToGameScore(Game.SCORE_HIT);
+					score.setText(bGame.getGameScore());
 
 					Toast toast = Toast.makeText(getContext(), "Ship Hit",
 							Toast.LENGTH_SHORT);
@@ -137,11 +121,12 @@ public class BoardViewGame extends BoardView {
 						&& bGame.getPlayer2Grid(touchedColumn, touchedRow) != Game.ACTION_HIT) {
 
 					bGame.touchGrid(touchedColumn, touchedRow, Game.ACTION_MISS); // ship
-																					// missed
+
+					bGame.addToGameScore(Game.SCORE_MISS);
+					score.setText(bGame.getGameScore());
 				}
 			}
 
-			//invalidate((int)ls,(int)ts,(int)rs,(int)bs);
 			invalidate();
 			return false;
 		}
