@@ -1,15 +1,20 @@
 package uk.co.bkrpage.battleshipsi7709331;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
-public class BoardViewGame extends BoardView {
+public class BoardViewGame extends BoardView{
 	
 	private boolean shipsSet = false;
 
@@ -112,13 +117,12 @@ public class BoardViewGame extends BoardView {
 					game.sinkShipBlock();
 
 					if (game.getShipBlocksSunk() == 17) {
-						Toast toast = Toast.makeText(getContext(), "You have won this game!", Toast.LENGTH_LONG);
+						Toast toast = Toast.makeText(getContext(), "You have won this game with a score of " + game.getGameScore(), Toast.LENGTH_LONG);
 						toast.show();
 						
-						invalidate();
-						
 						game.resetGame();
-						return false;
+						
+						showRestart();
 						
 					} else {
 						Toast toast = Toast.makeText(getContext(), "Ship Hit", Toast.LENGTH_SHORT);
@@ -137,6 +141,21 @@ public class BoardViewGame extends BoardView {
 			invalidate();
 			return false;
 		}
+	}
+	
+
+	public void showRestart(){
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+		builder.setMessage("You won!").setPositiveButton("Restart", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            	Intent intent = new Intent(getContext(),
+						Ship_Placement.class);
+				
+	            getContext().startActivity(intent);
+            }
+        });
+
 	}
 
 	GestureDetector bDetector = new GestureDetector(this.getContext(),
