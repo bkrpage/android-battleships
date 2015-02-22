@@ -4,14 +4,10 @@ import java.util.Random;
 
 public class Game {
 	public static final int DEFAULT_COLUMNS = 10, DEFAULT_ROWS = 10, PLAYERS = 2;
-	
 	public static final int ACTION_HIT = 3, ACTION_MISS = 2, ACTION_SHIP = 1;
-	
-	public static final boolean HORIZONTAL = true, VERTICAL = false;
-	
 	public static final int SCORE_HIT = 50, SCORE_MISS = -5;
-	
 	public static final int PLAYER_ONE = 0, PLAYER_TWO = 1;
+	public static final boolean HORIZONTAL = true, VERTICAL = false;
 
 	private final int setColumns;
 	private final int setRows;
@@ -25,7 +21,7 @@ public class Game {
 	private static boolean shipOrientation = true;
 	
 	private int gameScore;
-	private boolean singlePlayer = false;
+	private static boolean singlePlayer = false;
 	
 	private boolean[] shipsSet = new boolean[2];
 		
@@ -57,44 +53,9 @@ public class Game {
 
 		gameScore = 0;
 		shipBlocksSunk = 0;
-	}
-	
-	public int getColumns() {
-		return setColumns;
-	}
-	
-	/**
-	 * Places 5 ships - 5, 4, 3, 3, 2 - on the specified game board.
-	 * 
-	 * @param player Should be game variable Game.PLAYER_ONE or Game.PLAYER_TWO This is the Board thatt he ships will be placed on.
-	 */
-	
-	public void placeAllShips(int player){
-	if (!shipsSet[player]){
-		for (int i = 0; i <= 4 ; i++ ){
-			if (i <= 1){
-				placeRandomShip(i + 1, 1);
-			} else {
-				placeRandomShip(i, 1);
-			}
-		}
-		shipsSet[player] = true;
-	}
-	}
-	
-	public void placeRandomShip(int size, int player){
-		Random rand = new Random();
 		
-		int randCol = rand.nextInt(10);
-		int randRow = rand.nextInt(10);
-		boolean randBool = rand.nextBoolean();		
-		
-		while (!setShip(randCol, randRow, size, randBool, player)){
-			randCol = rand.nextInt(10);
-			randRow = rand.nextInt(10);
-			randBool = rand.nextBoolean();
-		}
-			
+		shipsSet[PLAYER_ONE] = false;
+		shipsSet[PLAYER_TWO] = false;
 	}
 	
 	/**
@@ -109,7 +70,7 @@ public class Game {
 		boolean valid = true;
 		
 		for (int i = 0; i <= size; i++) {
-			if (player == 1) 
+			if (player == PLAYER_ONE) 
 			{
 				if ((horiz && column + i >= 10)
 						|| (horiz && (player1Grid[column + i][row] == ACTION_SHIP))) {
@@ -119,7 +80,7 @@ public class Game {
 					valid = false;
 				}
 			} 
-			else if (player == 2)
+			else if (player == PLAYER_TWO)
 			{
 				if ((horiz && column + i >= 10)
 						|| (horiz && (player2Grid[column + i][row] == ACTION_SHIP))) 
@@ -143,13 +104,13 @@ public class Game {
 		valid = isShipValid(column, row, size, horiz, player);
 
 		for (int i = 0; i <= size; i++) {
-			if (player == 1) {
+			if (player == PLAYER_ONE) {
 				if (horiz && valid) {
 					player1Grid[column + i][row] = ACTION_SHIP;
 				} else if (!horiz && valid) {
 					player1Grid[column][row + i] = ACTION_SHIP;
 				}
-			} else if (player == 2) {
+			} else if (player == PLAYER_TWO) {
 				if (horiz && valid) {
 					player2Grid[column + i][row] = ACTION_SHIP;
 				} else if (!horiz && valid) {
@@ -159,17 +120,65 @@ public class Game {
 		}
 		return valid;
 	}
+	
+	public void placeRandomShip(int size, int player){
+		Random rand = new Random();
+		
+		int randCol = rand.nextInt(10);
+		int randRow = rand.nextInt(10);
+		boolean randBool = rand.nextBoolean();		
+		
+		while (!setShip(randCol, randRow, size, randBool, player)){
+			randCol = rand.nextInt(10);
+			randRow = rand.nextInt(10);
+			randBool = rand.nextBoolean();
+		}
+			
+	}
+		
+	/**
+	 * Places 5 ships - 5, 4, 3, 3, 2 - on the specified game board.
+	 * 
+	 * @param player Should be game variable Game.PLAYER_ONE or Game.PLAYER_TWO This is the Board thatt he ships will be placed on.
+	 */
+	public void placeAllShips(int player){
+		if (!shipsSet[player]) {
+			for (int i = 0; i <= 4; i++) {
+				if (i <= 1) {
+					placeRandomShip(i + 1, player);
+				} else {
+					placeRandomShip(i, player);
+				}
+			}
+			shipsSet[player] = true;
+		}
+	}
 
-	public boolean touchGrid(int column, int row, int action) {
+	public boolean touchGridOf(int column, int row, int action, int player) {
 		for (int iRow = 0; iRow < setRows; ++iRow) {
 			for (int jCol = 0; jCol < setColumns; jCol++) {
-				if (player2Grid[column][row] == 0 || player2Grid[column][row] == ACTION_SHIP) { 
-					player2Grid[column][row] = action;
-					return true;
+				if (player == PLAYER_ONE){
+					if (player1Grid[column][row] == 0 || player1Grid[column][row] == ACTION_SHIP) { 
+						player1Grid[column][row] = action;
+						return true;
+					}
+				} else if (player == PLAYER_TWO){
+					if (player2Grid[column][row] == 0 || player2Grid[column][row] == ACTION_SHIP) { 
+						player2Grid[column][row] = action;
+						return true;
+					}
 				}
 			}
 		}
 		return false;
+	}
+	
+	public void sinkShipBlock(){
+		this.shipBlocksSunk++;
+	}
+	
+	public void addToGameScore(int addition){
+		this.gameScore += addition;
 	}
 	
 //	public void changePlayerFrom(int player){
@@ -188,7 +197,11 @@ public class Game {
 //	}
 //	public static int getPlayer(){
 //		return currentPlayer;
-//	};
+//	};this.
+	
+	public int getColumns() {
+		return setColumns;
+	}
 
 	public int getRows() {
 		return setRows;
@@ -214,10 +227,6 @@ public class Game {
 		return shipCount;
 	}
 
-	public void setShipCount(int shipCount[]) {
-		this.shipCount = shipCount;
-	}
-
 	public int getShipSize() {
 		return shipSize;
 	}
@@ -238,32 +247,35 @@ public class Game {
 		return gameScore;
 	}
 
-	public void setGameScore(int gameScore) {
-		this.gameScore = gameScore;
-	}
-	
-	public void addToGameScore(int addition){
-		this.gameScore += addition;
-	}
-
 	public int getShipBlocksSunk() {
 		return shipBlocksSunk;
-	}
-
-	public void setShipBlocksSunk(int shipBlocksSunk) {
-		this.shipBlocksSunk = shipBlocksSunk;
-	}
-	
-	public void sinkShipBlock(){
-		this.shipBlocksSunk++;
 	}
 
 	public boolean getShipsSet(int player) {
 		return shipsSet[player];
 	}
 
+	public boolean isSinglePlayer() {
+		return singlePlayer;
+	}
+
+	public void setGameScore(int gameScore) {
+		this.gameScore = gameScore;
+	}
+
+	public void setShipCount(int shipCount[]) {
+		this.shipCount = shipCount;
+	}
+
+	public void setShipBlocksSunk(int shipBlocksSunk) {
+		this.shipBlocksSunk = shipBlocksSunk;
+	}
 	public void setShipsSet(boolean shipsSet, int player) {
 		this.shipsSet[player] = shipsSet;
+	}
+
+	public static void setSinglePlayer(boolean bool) {
+		singlePlayer = bool;
 	}
 	
 	

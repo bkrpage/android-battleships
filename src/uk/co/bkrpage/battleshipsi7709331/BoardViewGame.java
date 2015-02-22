@@ -109,7 +109,7 @@ public class BoardViewGame extends BoardView{
 															// inside the grid
 				if (game.getPlayer2Grid(touchedColumn, touchedRow) == Game.ACTION_SHIP) {
 
-					game.touchGrid(touchedColumn, touchedRow, Game.ACTION_HIT); // ship
+					game.touchGridOf(touchedColumn, touchedRow, Game.ACTION_HIT, Game.PLAYER_TWO); // ship
 																					// hit
 					game.addToGameScore(Game.SCORE_HIT);
 					game.sinkShipBlock();
@@ -130,7 +130,7 @@ public class BoardViewGame extends BoardView{
 				} else if (game.getPlayer2Grid(touchedColumn, touchedRow) != Game.ACTION_MISS
 						&& game.getPlayer2Grid(touchedColumn, touchedRow) != Game.ACTION_HIT) {
 
-					game.touchGrid(touchedColumn, touchedRow, Game.ACTION_MISS); // ship
+					game.touchGridOf(touchedColumn, touchedRow, Game.ACTION_MISS, Game.PLAYER_TWO); // ship
 
 					game.addToGameScore(Game.SCORE_MISS);
 				}
