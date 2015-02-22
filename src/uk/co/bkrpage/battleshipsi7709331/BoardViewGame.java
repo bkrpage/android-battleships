@@ -2,7 +2,6 @@ package uk.co.bkrpage.battleshipsi7709331;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Toast;
 
 public class BoardViewGame extends BoardView{
@@ -30,9 +28,9 @@ public class BoardViewGame extends BoardView{
 		if (!shipsSet){
 			for (int i = 0; i <= 4 ; i++ ){
 				if (i <= 1){
-					game.placeRandomShip(i + 1);
+					game.placeRandomShip(i + 1, 2);
 				} else {
-					game.placeRandomShip(i);
+					game.placeRandomShip(i, 2);
 				}
 			}
 			shipsSet = true;
@@ -150,7 +148,7 @@ public class BoardViewGame extends BoardView{
 		builder.setMessage("You won!").setPositiveButton("Restart", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
             	Intent intent = new Intent(getContext(),
-						Ship_Placement.class);
+						ShipPlacement.class);
 				
 	            getContext().startActivity(intent);
             }

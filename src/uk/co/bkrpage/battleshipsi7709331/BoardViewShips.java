@@ -14,6 +14,18 @@ public class BoardViewShips extends BoardView {
 	public BoardViewShips(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
+	
+	public void init(){
+		super.init(); 
+		
+		if (game.getSinglePlayer()){
+			game.placeAllShips(Game.PLAYER_ONE);
+		} else {
+			game.placeAllShips(Game.PLAYER_ONE);
+			game.placeAllShips(Game.PLAYER_TWO);
+		}
+		
+	}
 
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
@@ -56,110 +68,6 @@ public class BoardViewShips extends BoardView {
 		//String strShipCount = Integer.toString(bGame.getShipCount()[0] + 1); 
 		// TODO Make array position dependent on the current player.
 
-	}
-
-	// TODO add ship Placement.
-
-	class mListener extends GestureDetector.SimpleOnGestureListener {
-
-		@Override
-		public boolean onDown(MotionEvent e) {
-			return true;
-		}
-
-		//private int currentPlayer = 1;
-		
-		//private int[] action = {1,2,3};
-
-		// TODO Move change player stuff to Game.java
-
-		@Override
-		public boolean onSingleTapConfirmed(MotionEvent e) {
-
-			float diameter = calcDiam();
-			float separator = (float) (diameter * SEPARATOR_RATIO);
-
-			int touchedColumn;
-			int touchedRow;
-
-			float touchX = e.getX();
-			float touchY = e.getY();
-
-			touchedColumn = (int) Math.floor(touchX
-					/ ((separator + diameter) * Game.DEFAULT_COLUMNS) * 10);
-			touchedRow = (int) Math.floor(touchY
-					/ ((separator + diameter) * Game.DEFAULT_ROWS) * 10);
-			
-
-			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player
-															// is clicking
-															// inside the grid
-				if (game.getShipCount()[0] >= 0) {
-					if (game.getPlayer1Grid(touchedColumn, touchedRow) != Game.ACTION_SHIP) {
-						// This code below to be replaced with setship 
-						//bGame.touchGrid(touchedColumn, touchedRow, Game.ACTION_SHIP);
-												
-						if (game.setShip(touchedColumn, touchedRow, game.getShipSize(), game.getShipOrientation(), 1)) {
-							game.getShipCount()[0]--;
-
-							Toast toast = Toast.makeText(getContext(),
-									"Ship Placed", Toast.LENGTH_SHORT);
-							toast.show();
-						} else {
-							Toast toast = Toast.makeText(getContext(),
-									"Invalid ship placement", Toast.LENGTH_SHORT);
-							toast.show();
-						}
-					}
-				} else {
-					if (game.getPlayer1Grid(touchedColumn, touchedRow) == Game.ACTION_SHIP){
-						
-						game.touchGrid(touchedColumn, touchedRow, Game.ACTION_HIT); //ship hit
-						
-						Toast toast = Toast.makeText(getContext(), "Ship Hit", Toast.LENGTH_SHORT);
-						toast.show();
-						
-					} else if (game.getPlayer1Grid(touchedColumn, touchedRow) != Game.ACTION_MISS 
-							&& game.getPlayer1Grid(touchedColumn, touchedRow) != Game.ACTION_HIT) {
-						
-								game.touchGrid(touchedColumn, touchedRow, Game.ACTION_MISS); //ship missed
-					}
-				}
-				
-			}
-			
-			
-
-			// TODO Add Change of player method in which activity is changed
-//			float ls = separator + (diameter + separator) * touchedColumn; // left
-//			float ts = separator + (diameter + separator) * touchedRow; // top
-//			float rs = separator + diameter + (diameter + separator)
-//					* touchedColumn; // right
-//			float bs = separator + diameter + (diameter + separator)
-//					* touchedRow; // bottom
-			
-			// make it stop if count is at 0;
-			
-			invalidate();
-			//invalidate((int) ls, (int) ts, (int) rs, (int) bs);
-			return false;
-		}
-	}
-
-	GestureDetector bDetector = new GestureDetector(this.getContext(),
-			new mListener());
-
-	@SuppressLint("ClickableViewAccessibility")
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-
-		boolean result = bDetector.onTouchEvent(event);
-		if (!result) {
-			if (event.getAction() == MotionEvent.ACTION_UP) {
-				result = true;
-			}
-		}
-		return result;
 	}
 
 }

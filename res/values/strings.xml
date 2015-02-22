@@ -21,6 +21,11 @@
     <string name="playGame">Play Game</string>
     <string name="dialog_won_game">You won the game!</string>
     <string name="restart">Restart Game</string>
-    
+    <string name="title_activity_start_menu">Menu</string>
+    <string name="against_computer">Vs. Computer</string>
+    <string name="against_human">Vs. Human</string>
+    <string name="leaderboards">Leaderboards</string>
+    <string name="help">Help</string>
+    <string name="close">Exit Game</string>
 
 </resources>

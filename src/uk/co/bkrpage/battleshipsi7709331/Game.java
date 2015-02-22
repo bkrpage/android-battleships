@@ -10,6 +10,8 @@ public class Game {
 	public static final boolean HORIZONTAL = true, VERTICAL = false;
 	
 	public static final int SCORE_HIT = 50, SCORE_MISS = -5;
+	
+	public static final int PLAYER_ONE = 0, PLAYER_TWO = 1;
 
 	private final int setColumns;
 	private final int setRows;
@@ -23,24 +25,26 @@ public class Game {
 	private static boolean shipOrientation = true;
 	
 	private int gameScore;
+	private boolean singlePlayer = false;
+	
+	private boolean[] shipsSet = new boolean[2];
 		
 	//private int currentPlayer;
-	//TODO Cannibalise this and make into different classes i.e. ShipPlace.java shots.java
 	
 	public Game(int columns, int rows, int players) {
 		setColumns = columns;
 		setRows = rows;
-		// TODO Remove this 
-		//currentPlayer = 1;
 		player1Grid = new int[columns][rows];
 		player2Grid = new int[columns][rows];
 		gameScore = 0;
 		
+		shipsSet[PLAYER_ONE] = false;
+		shipsSet[PLAYER_TWO] = false;
+		
 		shipBlocksSunk = 0;
 		
-//		for (int i = 0; i < getShipCount().length; i++){
-//			getShipCount()[i] = 4;
-//		}
+		// TODO Remove this 
+		//currentPlayer = 1;
 	}
 	
 	public void resetGame(){
@@ -58,30 +62,36 @@ public class Game {
 	public int getColumns() {
 		return setColumns;
 	}
-
-	public int getRows() {
-		return setRows;
+	
+	/**
+	 * Places 5 ships - 5, 4, 3, 3, 2 - on the specified game board.
+	 * 
+	 * @param player Should be game variable Game.PLAYER_ONE or Game.PLAYER_TWO This is the Board thatt he ships will be placed on.
+	 */
+	
+	public void placeAllShips(int player){
+	if (!shipsSet[player]){
+		for (int i = 0; i <= 4 ; i++ ){
+			if (i <= 1){
+				placeRandomShip(i + 1, 1);
+			} else {
+				placeRandomShip(i, 1);
+			}
+		}
+		shipsSet[player] = true;
 	}
-
-	public int getPlayer1Grid(int column, int row) {
-		return player1Grid[column][row];
-	}
-
-	public int getPlayer2Grid(int column, int row) {
-		return player2Grid[column][row];
 	}
 	
-	
-	public void placeRandomShip(int size){
+	public void placeRandomShip(int size, int player){
 		Random rand = new Random();
 		
-		int randCol = rand.nextInt(9);
-		int randRow = rand.nextInt(9);
+		int randCol = rand.nextInt(10);
+		int randRow = rand.nextInt(10);
 		boolean randBool = rand.nextBoolean();		
 		
-		while (!setShip(randCol, randRow, size, randBool, 2)){
-			randCol = rand.nextInt(9);
-			randRow = rand.nextInt(9);
+		while (!setShip(randCol, randRow, size, randBool, player)){
+			randCol = rand.nextInt(10);
+			randRow = rand.nextInt(10);
 			randBool = rand.nextBoolean();
 		}
 			
@@ -94,6 +104,7 @@ public class Game {
 	 * @param horiz 	Is the ship Horizontal? x and y co-ords are the top left of the ship at all time.
 	 * @param player	The player of the board that is being checked.
 	 */
+	
 	public boolean isShipValid(int column, int row, int size, boolean horiz, int player){
 		boolean valid = true;
 		
@@ -178,6 +189,18 @@ public class Game {
 //	public static int getPlayer(){
 //		return currentPlayer;
 //	};
+
+	public int getRows() {
+		return setRows;
+	}
+
+	public int getPlayer1Grid(int column, int row) {
+		return player1Grid[column][row];
+	}
+
+	public int getPlayer2Grid(int column, int row) {
+		return player2Grid[column][row];
+	}
 	
 	public int getShipCount(int player){
 		return shipCount[player];
@@ -233,6 +256,14 @@ public class Game {
 	
 	public void sinkShipBlock(){
 		this.shipBlocksSunk++;
+	}
+
+	public boolean getShipsSet(int player) {
+		return shipsSet[player];
+	}
+
+	public void setShipsSet(boolean shipsSet, int player) {
+		this.shipsSet[player] = shipsSet;
 	}
 	
 	
