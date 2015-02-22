@@ -18,7 +18,7 @@ public class WonGameDialog extends DialogFragment{
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						Intent intent = new Intent(getActivity(),
-								Ship_Placement.class);
+								ShipPlacement.class);
 						
 						startActivity(intent);
 					}
