@@ -75,8 +75,14 @@ public class BoardViewGame extends BoardView{
 			}
 		}
 		
-		canvas.drawText("Your score is: " + game.getGameScore(), 15, (separator+diameter)* 10 + 25, getTextPaint());
 		
+		if (game.isSinglePlayer()){
+			game.setStrCurrentPlayer("Player 1");
+		}
+		
+		
+		canvas.drawText("Your score is: " + game.getGameScore() , 15, (separator+diameter)* 10 + 25, getTextPaint());
+		canvas.drawText("Currently on " + game.getStrCurrentPlayer() + "'s turn", 15,(separator+diameter)* 10 + 50, getTextPaint() );
 	}
 
 	class mListener extends GestureDetector.SimpleOnGestureListener {
