@@ -22,10 +22,10 @@ public class Game {
 	
 	private int gameScore;
 	private static boolean singlePlayer = false;
+	private String strCurrentPlayer;
+	private int currentPlayer;
 	
 	private boolean[] shipsSet = new boolean[2];
-		
-	//private int currentPlayer;
 	
 	public Game(int columns, int rows, int players) {
 		setColumns = columns;
@@ -39,8 +39,8 @@ public class Game {
 		
 		shipBlocksSunk = 0;
 		
-		// TODO Remove this 
-		//currentPlayer = 1;
+		strCurrentPlayer = "Player 1";
+		currentPlayer = PLAYER_ONE;
 	}
 	
 	public void resetGame(){
@@ -181,23 +181,36 @@ public class Game {
 		this.gameScore += addition;
 	}
 	
-//	public void changePlayerFrom(int player){
-//		
-//		if (player == 1) {
-//			player++;
-//		} else {
-//			player = 1;
-//		}
-//		
-//		//setPlayer(player);
-//	}
+	public void changePlayerFrom(int player){
+		
+		if (player == PLAYER_ONE) {
+			currentPlayer = PLAYER_TWO;
+			if (singlePlayer){
+				strCurrentPlayer = "Computer";
+			} else {
+				strCurrentPlayer = "Player 2";
+			}
+		} else {
+			currentPlayer = PLAYER_ONE;
+			strCurrentPlayer = "Player 1";
+		}
+	}
 	
-//	public void setPlayer(int player){
-//		currentPlayer = player;
-//	}
-//	public static int getPlayer(){
-//		return currentPlayer;
-//	};this.
+	public void setPlayer(int player){
+		currentPlayer = player;
+		if (player == PLAYER_ONE){
+			strCurrentPlayer = "Player 1";
+		} else if (player == PLAYER_TWO) {
+			if (singlePlayer){
+				strCurrentPlayer = "Computer";
+			} else {
+				strCurrentPlayer = "Player 2";
+			}
+		}
+	}
+	public  int getPlayer(){
+		return currentPlayer;
+	};
 	
 	public int getColumns() {
 		return setColumns;
@@ -259,6 +272,10 @@ public class Game {
 		return singlePlayer;
 	}
 
+	public String getStrCurrentPlayer() {
+		return strCurrentPlayer;
+	}
+
 	public void setGameScore(int gameScore) {
 		this.gameScore = gameScore;
 	}
@@ -276,6 +293,10 @@ public class Game {
 
 	public static void setSinglePlayer(boolean bool) {
 		singlePlayer = bool;
+	}
+
+	public void setStrCurrentPlayer(String strCurrentPlayer) {
+		this.strCurrentPlayer = strCurrentPlayer;
 	}
 	
 	
