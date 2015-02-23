@@ -42,26 +42,9 @@ public class Game {
 		shipBlocksSunk = 0;
 		
 		strCurrentPlayer = "Player 1";
-		
 		strOppositePlayer = "Player 2";
 		
 		currentPlayer = PLAYER_ONE;
-	}
-	
-	public void resetGame(){
-		for (int i = 0; i < setColumns; i++){
-			for (int j = 0; j < setRows; j++){
-				player1Grid[i][j] = 0;
-				player2Grid[i][j] = 0;
-			}
-		}
-
-		gameScore[PLAYER_ONE] = 0;
-		gameScore[PLAYER_TWO] = 0;
-		shipBlocksSunk = 0;
-		
-		shipsSet[PLAYER_ONE] = false;
-		shipsSet[PLAYER_TWO] = false;
 	}
 	
 	/**
