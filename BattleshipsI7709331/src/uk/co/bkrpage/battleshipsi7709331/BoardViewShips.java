@@ -4,9 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.widget.Toast;
 
 public class BoardViewShips extends BoardView {
 
@@ -16,13 +13,9 @@ public class BoardViewShips extends BoardView {
 	
 	public void init(){
 		super.init(); 
-		
-		if (game.isSinglePlayer()){
-			game.placeAllShips(Game.PLAYER_ONE);
-		} else {
-			game.placeAllShips(Game.PLAYER_ONE);
-			game.placeAllShips(Game.PLAYER_TWO);
-		}
+
+		game.placeAllShips(Game.PLAYER_ONE);
+		game.placeAllShips(Game.PLAYER_TWO);
 		
 	}
 
@@ -62,12 +55,6 @@ public class BoardViewShips extends BoardView {
 
 				canvas.drawRect(ls, ts, rs, bs, paint);
 			}
-		}
-		
-		if (game.isSinglePlayer()){
-			canvas.drawText("Single Player", 15, (separator+diameter) * 10 + 20, getHitPaint());
-		} else if (!game.isSinglePlayer()){
-			canvas.drawText("Multiplayer", 15, (separator+diameter) * 10 + 20, getHitPaint());
 		}
 
 		//String strShipCount = Integer.toString(bGame.getShipCount()[0] + 1); 

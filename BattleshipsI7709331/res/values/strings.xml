@@ -27,5 +27,6 @@
     <string name="leaderboards">Leaderboards</string>
     <string name="help">Help</string>
     <string name="close">Exit Game</string>
+    <string name="title_activity_score">High Scores</string>
 
 </resources>

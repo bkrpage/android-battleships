@@ -9,8 +9,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class ShipPlacement extends Activity {
-
-	private boolean singlePlayer;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +23,6 @@ public class ShipPlacement extends Activity {
 				startActivity(intent);
 			}
 		});
-
-		
-		Bundle bundle = getIntent().getExtras();
-		singlePlayer = bundle.getBoolean("SINGLE_PLAYER");
-		
-		Game.setSinglePlayer(singlePlayer);
 	}
 	
 	public boolean onKeyDown(int keyCode, KeyEvent event)
@@ -40,10 +32,6 @@ public class ShipPlacement extends Activity {
 	        finish();
 	    }
 	    return super.onKeyDown(keyCode, event);
-	}
-	
-	public boolean isSinglePlayer(){
-		return singlePlayer;
 	}
 
 }

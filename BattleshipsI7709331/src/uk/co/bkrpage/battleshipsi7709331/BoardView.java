@@ -40,7 +40,7 @@ public class BoardView extends View {
 	public void init(){
 		
 		if(game == null){
-			 game = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS, Game.PLAYERS);
+			 game = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS);
 		}
 
 		gridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);

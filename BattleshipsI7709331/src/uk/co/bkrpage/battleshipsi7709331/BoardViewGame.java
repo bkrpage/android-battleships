@@ -1,10 +1,7 @@
 package uk.co.bkrpage.battleshipsi7709331;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
@@ -16,9 +13,10 @@ public class BoardViewGame extends BoardView{
 	
 	private boolean shipsSet = false;
 
+	private HighScoreDB dbScores = new HighScoreDB(getContext());
+
 	public BoardViewGame(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		// TODO Auto-generated constructor stub
 	}
 	
 	
@@ -76,13 +74,8 @@ public class BoardViewGame extends BoardView{
 		}
 		
 		
-		if (game.isSinglePlayer()){
-			game.setStrCurrentPlayer("Player 1");
-		}
-		
-		
-		canvas.drawText("Your score is: " + game.getGameScore() , 15, (separator+diameter)* 10 + 25, getTextPaint());
-		canvas.drawText("Currently on " + game.getStrCurrentPlayer() + "'s turn", 15,(separator+diameter)* 10 + 50, getTextPaint() );
+		canvas.drawText("Your score is: " + game.getGameScore(game.getPlayer()) + " - Current Highscore: " + dbScores.getHighScore() , 15, (separator+diameter)* 10 + 25, getTextPaint());
+		canvas.drawText("Currently on " + game.getStrCurrentPlayer() + "'s turn - Wait for " + game.getStrOppositePlayer() + "'s Turn", 15,(separator+diameter)* 10 + 50, getTextPaint() );
 	}
 
 	class mListener extends GestureDetector.SimpleOnGestureListener {
@@ -104,6 +97,10 @@ public class BoardViewGame extends BoardView{
 			float touchX = e.getX();
 			float touchY = e.getY();
 			
+			int currentPlayer = game.getPlayer();
+			int oppositePlayer = game.getOppositePlayer();
+			
+			
 			touchedColumn = (int) Math.floor(touchX
 					/ ((separator + diameter) * Game.DEFAULT_COLUMNS) * 10);
 			touchedRow = (int) Math.floor(touchY
@@ -113,20 +110,22 @@ public class BoardViewGame extends BoardView{
 			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player
 															// is clicking
 															// inside the grid
-				if (game.getPlayer2Grid(touchedColumn, touchedRow) == Game.ACTION_SHIP) {
+				if (game.getOppositePlayerGrid(touchedColumn, touchedRow) == Game.ACTION_SHIP) {
 
-					game.touchGridOf(touchedColumn, touchedRow, Game.ACTION_HIT, Game.PLAYER_TWO); // ship
+					game.touchGridOf(touchedColumn, touchedRow, Game.ACTION_HIT, oppositePlayer); // ship
 																					// hit
-					game.addToGameScore(Game.SCORE_HIT);
+					game.addToGameScore(Game.SCORE_HIT, currentPlayer);
 					game.sinkShipBlock();
 
 					if (game.getShipBlocksSunk() == 17) {
-						Toast toast = Toast.makeText(getContext(), "You have won this game with a score of " + game.getGameScore(), Toast.LENGTH_LONG);
+						Toast toast = Toast.makeText(getContext(), "You have won this game with a score of " + game.getGameScore(currentPlayer), Toast.LENGTH_LONG);
 						toast.show();
+						
+						dbScores.addScore(game.getStrCurrentPlayer(),game.getGameScore(currentPlayer));
 						
 						game.resetGame();
 						
-						showRestart();
+						//showRestart(); // TODO This isnt working 
 						
 					} else {
 						Toast toast = Toast.makeText(getContext(), "Ship Hit", Toast.LENGTH_SHORT);
@@ -138,7 +137,7 @@ public class BoardViewGame extends BoardView{
 
 					game.touchGridOf(touchedColumn, touchedRow, Game.ACTION_MISS, Game.PLAYER_TWO); // ship
 
-					game.addToGameScore(Game.SCORE_MISS);
+					game.addToGameScore(Game.SCORE_MISS, currentPlayer);
 				}
 			}
 
@@ -148,19 +147,19 @@ public class BoardViewGame extends BoardView{
 	}
 	
 
-	public void showRestart(){
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-		builder.setMessage("You won!").setPositiveButton("Restart", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-            	Intent intent = new Intent(getContext(),
-						ShipPlacement.class);
-				
-	            getContext().startActivity(intent);
-            }
-        });
-
-	}
+//	public void showRestart(){
+//
+//		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//		builder.setMessage("You won!").setPositiveButton("Restart", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int id) {
+//            	Intent intent = new Intent(getContext(),
+//						ShipPlacement.class);
+//				
+//	            getContext().startActivity(intent);
+//            }
+//        });
+//
+//	}
 
 	GestureDetector bDetector = new GestureDetector(this.getContext(),
 			new mListener());
