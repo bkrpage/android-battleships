@@ -2,106 +2,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context="${relativePackage}.${activityClass}" >
 
     <uk.co.bkrpage.battleshipsi7709331.BoardViewShips
         android:id="@+id/boardViewShips1"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txtShipPlacements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/players_ships"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnPlayGame"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1" />
-	<!-- 
-	
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal" >
-
-        <Button
-            android:id="@+id/btnHoriz"
-            style="@style/AppBaseTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/horizontal" />
-
-        <Button
-            android:id="@+id/btnVert"
-            style="@style/AppBaseTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/vertical" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        tools:context="${relativePackage}.${activityClass}" >
-        
-        <Button
-	        android:id="@+id/btnShip1"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/ship1"
-	        style="?android:attr/buttonStyleSmall" />
-	    
-	    <Button
-	        android:id="@+id/btnShip2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/ship2"
-	        style="?android:attr/buttonStyleSmall" />
-
-        
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        tools:context="${relativePackage}.${activityClass}" >
-	    
-	    <Button
-	        android:id="@+id/btnShip3"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/ship3"
-	        style="?android:attr/buttonStyleSmall" />
-	    
-	    <Button
-	        android:id="@+id/btnShip4"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/ship4"
-	        style="?android:attr/buttonStyleSmall" />
-	    
-	    <Button
-	        android:id="@+id/btnShip5"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/ship5"
-	        style="?android:attr/buttonStyleSmall" />
-    
-	</LinearLayout>
-	-->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/btnPlayGame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/playGame" />
-
-    </LinearLayout>
+        android:text="@string/playGame"
+        android:textSize="30sp" />
 
 </LinearLayout>

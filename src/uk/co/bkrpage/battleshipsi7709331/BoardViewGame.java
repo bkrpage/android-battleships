@@ -1,7 +1,10 @@
 package uk.co.bkrpage.battleshipsi7709331;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
@@ -118,25 +121,25 @@ public class BoardViewGame extends BoardView{
 					game.sinkShipBlock();
 
 					if (game.getShipBlocksSunk() == 17) {
+						// if win
 						Toast toast = Toast.makeText(getContext(), "You have won this game with a score of " + game.getGameScore(currentPlayer), Toast.LENGTH_LONG);
 						toast.show();
 						
 						dbScores.addScore(game.getStrCurrentPlayer(),game.getGameScore(currentPlayer));
 						
-						game.resetGame();
 						
-						//showRestart(); // TODO This isnt working 
+						showRestart(); // TODO This isnt working 
+						
 						
 					} else {
 						Toast toast = Toast.makeText(getContext(), "Ship Hit", Toast.LENGTH_SHORT);
 						toast.show();
 					}
 
-				} else if (game.getPlayer2Grid(touchedColumn, touchedRow) != Game.ACTION_MISS
-						&& game.getPlayer2Grid(touchedColumn, touchedRow) != Game.ACTION_HIT) {
+				} else if (game.getOppositePlayerGrid(touchedColumn, touchedRow) != Game.ACTION_MISS
+						&& game.getOppositePlayerGrid(touchedColumn, touchedRow) != Game.ACTION_HIT) {
 
-					game.touchGridOf(touchedColumn, touchedRow, Game.ACTION_MISS, Game.PLAYER_TWO); // ship
-
+					game.touchGridOf(touchedColumn, touchedRow, Game.ACTION_MISS, oppositePlayer);
 					game.addToGameScore(Game.SCORE_MISS, currentPlayer);
 				}
 			}
@@ -147,19 +150,22 @@ public class BoardViewGame extends BoardView{
 	}
 	
 
-//	public void showRestart(){
-//
-//		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//		builder.setMessage("You won!").setPositiveButton("Restart", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int id) {
-//            	Intent intent = new Intent(getContext(),
-//						ShipPlacement.class);
-//				
-//	            getContext().startActivity(intent);
-//            }
-//        });
-//
-//	}
+	public void showRestart(){
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+		builder.setMessage("You won!");
+		builder.setPositiveButton("Restart", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            	Intent intent = new Intent(getContext(),
+						StartMenu.class);
+
+				game = null;
+	            getContext().startActivity(intent);
+            }
+        });
+
+		builder.show();
+	}
 
 	GestureDetector bDetector = new GestureDetector(this.getContext(),
 			new mListener());
