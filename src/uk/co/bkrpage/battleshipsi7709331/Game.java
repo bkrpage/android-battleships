@@ -20,19 +20,21 @@ public class Game {
 	private static int shipSize = 0;
 	private static boolean shipOrientation = true;
 	
-	private int gameScore;
-	private static boolean singlePlayer = false;
+	private int[] gameScore = new int[2];
 	private String strCurrentPlayer;
+	private String strOppositePlayer;
 	private int currentPlayer;
 	
 	private boolean[] shipsSet = new boolean[2];
 	
-	public Game(int columns, int rows, int players) {
+	
+	public Game(int columns, int rows) {
 		setColumns = columns;
 		setRows = rows;
 		player1Grid = new int[columns][rows];
 		player2Grid = new int[columns][rows];
-		gameScore = 0;
+		gameScore[PLAYER_ONE] = 0;
+		gameScore[PLAYER_TWO] = 0;
 		
 		shipsSet[PLAYER_ONE] = false;
 		shipsSet[PLAYER_TWO] = false;
@@ -40,6 +42,9 @@ public class Game {
 		shipBlocksSunk = 0;
 		
 		strCurrentPlayer = "Player 1";
+		
+		strOppositePlayer = "Player 2";
+		
 		currentPlayer = PLAYER_ONE;
 	}
 	
@@ -51,7 +56,8 @@ public class Game {
 			}
 		}
 
-		gameScore = 0;
+		gameScore[PLAYER_ONE] = 0;
+		gameScore[PLAYER_TWO] = 0;
 		shipBlocksSunk = 0;
 		
 		shipsSet[PLAYER_ONE] = false;
@@ -65,7 +71,6 @@ public class Game {
 	 * @param horiz 	Is the ship Horizontal? x and y co-ords are the top left of the ship at all time.
 	 * @param player	The player of the board that is being checked.
 	 */
-	
 	public boolean isShipValid(int column, int row, int size, boolean horiz, int player){
 		boolean valid = true;
 		
@@ -98,7 +103,7 @@ public class Game {
 		return valid;
 	}
 	
-	public boolean setShip(int column, int row, int size, boolean horiz, int player){
+	public boolean placeShip(int column, int row, int size, boolean horiz, int player){
 		boolean valid = false;
 		
 		valid = isShipValid(column, row, size, horiz, player);
@@ -128,7 +133,7 @@ public class Game {
 		int randRow = rand.nextInt(10);
 		boolean randBool = rand.nextBoolean();		
 		
-		while (!setShip(randCol, randRow, size, randBool, player)){
+		while (!placeShip(randCol, randRow, size, randBool, player)){
 			randCol = rand.nextInt(10);
 			randRow = rand.nextInt(10);
 			randBool = rand.nextBoolean();
@@ -177,22 +182,20 @@ public class Game {
 		this.shipBlocksSunk++;
 	}
 	
-	public void addToGameScore(int addition){
-		this.gameScore += addition;
+	public void addToGameScore(int addition, int player){
+		this.gameScore[player] += addition;
 	}
 	
-	public void changePlayerFrom(int player){
-		
+	public void changePlayerFrom(int player) {
+
 		if (player == PLAYER_ONE) {
 			currentPlayer = PLAYER_TWO;
-			if (singlePlayer){
-				strCurrentPlayer = "Computer";
-			} else {
-				strCurrentPlayer = "Player 2";
-			}
+			strOppositePlayer = "Player 1";
+			strCurrentPlayer = "Player 2";
 		} else {
 			currentPlayer = PLAYER_ONE;
 			strCurrentPlayer = "Player 1";
+			strOppositePlayer = "Player 2";
 		}
 	}
 	
@@ -203,17 +206,24 @@ public class Game {
 		if (player == PLAYER_ONE){
 			strCurrentPlayer = "Player 1";
 		} else if (player == PLAYER_TWO) {
-			// Proper distinction between computer and human player.
-			if (singlePlayer){
-				strCurrentPlayer = "Computer";
-			} else {
-				strCurrentPlayer = "Player 2";
-			}
+			strCurrentPlayer = "Player 2";
 		}
 	}
 	
-	public  int getPlayer(){
+	public int getPlayer(){
 		return currentPlayer;
+	}
+	
+	public int getOppositePlayer(){
+		int oppositePlayer = 0;
+		
+		if (currentPlayer == PLAYER_ONE){
+			oppositePlayer = PLAYER_TWO;
+		} else if (currentPlayer == PLAYER_TWO){
+			oppositePlayer = PLAYER_ONE;
+		}
+		
+		return oppositePlayer;
 	}
 	
 	public int getColumns() {
@@ -224,6 +234,30 @@ public class Game {
 		return setRows;
 	}
 
+	public int getOppositePlayerGrid(int column, int row){
+		int grid = 0;
+		
+		if (currentPlayer == PLAYER_ONE){
+			grid = player2Grid[column][row];
+		} else if (currentPlayer == PLAYER_TWO){
+			grid = player1Grid[column][row];
+		}
+		
+		return grid;
+	}
+	
+	public int getCurrentPlayerGrid(int column, int row){
+		int grid = 0;
+		
+		if (currentPlayer == PLAYER_ONE){
+			grid = player1Grid[column][row];
+		} else if (currentPlayer == PLAYER_TWO){
+			grid = player2Grid[column][row];
+		}
+		
+		return grid;
+	}
+	
 	public int getPlayer1Grid(int column, int row) {
 		return player1Grid[column][row];
 	}
@@ -260,8 +294,8 @@ public class Game {
 		shipOrientation= orient;
 	}
 
-	public int getGameScore() {
-		return gameScore;
+	public int getGameScore(int player) {
+		return gameScore[player];
 	}
 
 	public int getShipBlocksSunk() {
@@ -272,16 +306,16 @@ public class Game {
 		return shipsSet[player];
 	}
 
-	public boolean isSinglePlayer() {
-		return singlePlayer;
-	}
-
 	public String getStrCurrentPlayer() {
 		return strCurrentPlayer;
 	}
+	
+	public String getStrOppositePlayer(){
+		return strOppositePlayer;
+	}
 
-	public void setGameScore(int gameScore) {
-		this.gameScore = gameScore;
+	public void setGameScore(int gameScore, int player) {
+		this.gameScore[player] = gameScore;
 	}
 
 	public void setShipCount(int shipCount[]) {
@@ -291,12 +325,9 @@ public class Game {
 	public void setShipBlocksSunk(int shipBlocksSunk) {
 		this.shipBlocksSunk = shipBlocksSunk;
 	}
+	
 	public void setShipsSet(boolean shipsSet, int player) {
 		this.shipsSet[player] = shipsSet;
-	}
-
-	public static void setSinglePlayer(boolean bool) {
-		singlePlayer = bool;
 	}
 
 	public void setStrCurrentPlayer(String strCurrentPlayer) {

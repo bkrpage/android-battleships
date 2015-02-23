@@ -28,7 +28,7 @@ public class HighScoreDB extends SQLiteOpenHelper{
     	db.execSQL("CREATE TABLE " + scoreTable + " ("
     			+ attID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
     			+ attName + " TEXT, "
-    			+ attScore +" INTEGER NOT NULL));"
+    			+ attScore +" INTEGER NOT NULL);"
     	);
     	  
     }
@@ -51,26 +51,44 @@ public class HighScoreDB extends SQLiteOpenHelper{
 		db.close();
 	}
 	
-	public ArrayList<Integer> getScores(){
+	public int getHighScore(){
 		
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT * FROM " + scoreTable
+				+ " ORDER BY " + attScore + " DESC;", null);
+
+		int score = 0;
+
+		if (cursor.moveToFirst()) {
+			score = Integer.parseInt(cursor.getString(2));
+		}
+
+		cursor.close();
+		
+		return score;
+	}
+	
+	public ArrayList<Integer> getScores() {
+
 		ArrayList<Integer> highScore = new ArrayList<Integer>();
-		
-	   SQLiteDatabase db = this.getReadableDatabase();
-	   Cursor cursor = db.rawQuery("SELECT * FROM " + scoreTable + " ORDER BY " + attScore + "DESC", null);
-	   
-	   int score = 0;
-	   
-	   if(cursor.moveToFirst()){
-		   do {
-			   score = Integer.parseInt(cursor.getString(2));
-			   highScore.add(score);
-		   } while (cursor.moveToNext());
-	   }
-	   
-	   cursor.close();
-	   
-	   return highScore;
-	   
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT * FROM " + scoreTable
+				+ " ORDER BY " + attScore + " DESC;", null);
+
+		int score = 0;
+
+		if (cursor.moveToFirst()) {
+			do {
+				score = Integer.parseInt(cursor.getString(2));
+				highScore.add(score);
+			} while (cursor.moveToNext());
+		}
+
+		cursor.close();
+
+		return highScore;
+
 	}
 	
 	public ArrayList<String> getScoreNames(){
@@ -78,7 +96,7 @@ public class HighScoreDB extends SQLiteOpenHelper{
 		ArrayList<String> name = new ArrayList<String>();
 		
 	   SQLiteDatabase db = this.getReadableDatabase();
-	   Cursor cursor = db.rawQuery("SELECT * FROM " + scoreTable + " ORDER BY " + attScore + "DESC", null);
+	   Cursor cursor = db.rawQuery("SELECT * FROM " + scoreTable + " ORDER BY " + attScore + " DESC", null);
 	   
 	   String scoreName = "";
 	   

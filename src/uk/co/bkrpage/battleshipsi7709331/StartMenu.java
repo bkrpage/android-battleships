@@ -14,14 +14,13 @@ public class StartMenu extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start_menu);
-		
+
 		final Button btnPlayComputer = (Button) findViewById(R.id.btnPlayComputer);
 		
 		btnPlayComputer.setOnClickListener(new OnClickListener(){
 			public void onClick(View v){
 				
 				Intent intent = new Intent(getApplicationContext(), ShipPlacement.class);
-				intent.putExtra("SINGLE_PLAYER", true );
 				
 				startActivity(intent);
 			}
