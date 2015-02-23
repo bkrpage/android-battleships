@@ -198,9 +198,12 @@ public class Game {
 	
 	public void setPlayer(int player){
 		currentPlayer = player;
+		
+		// Set the string values
 		if (player == PLAYER_ONE){
 			strCurrentPlayer = "Player 1";
 		} else if (player == PLAYER_TWO) {
+			// Proper distinction between computer and human player.
 			if (singlePlayer){
 				strCurrentPlayer = "Computer";
 			} else {
@@ -208,9 +211,10 @@ public class Game {
 			}
 		}
 	}
+	
 	public  int getPlayer(){
 		return currentPlayer;
-	};
+	}
 	
 	public int getColumns() {
 		return setColumns;
