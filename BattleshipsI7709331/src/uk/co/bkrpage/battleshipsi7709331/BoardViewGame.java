@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -51,14 +52,15 @@ public class BoardViewGame extends BoardView{
 		for (int col = 0; col < game.getColumns(); col++) {
 			for (int row = 0; row < game.getRows(); row++) {
 				Paint paint;
-				actionAtPos = game.getPlayer2Grid(col, row);
+				actionAtPos = game.getOppositePlayerGrid(col, row);
 
-				// TODO Convert this code into correct functions - basically
-				// treating it as one player.
+				
 				if (actionAtPos == Game.ACTION_MISS) {
 					paint = getMissPaint();
 				} else if (actionAtPos == Game.ACTION_HIT) {
 					paint = getHitPaint();
+				} else if (game.getPlayer() == Game.PLAYER_TWO && actionAtPos == Game.ACTION_SHIP){
+					paint = getShipPaint();
 				} else {
 					paint = getBGPaint();
 				}
@@ -113,22 +115,22 @@ public class BoardViewGame extends BoardView{
 			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player
 															// is clicking
 															// inside the grid
+				
+				//loops for player
 				if (game.getOppositePlayerGrid(touchedColumn, touchedRow) == Game.ACTION_SHIP) {
 
 					game.touchGridOf(touchedColumn, touchedRow, Game.ACTION_HIT, oppositePlayer); // ship
 																					// hit
 					game.addToGameScore(Game.SCORE_HIT, currentPlayer);
-					game.sinkShipBlock();
+					game.sinkShipBlock(oppositePlayer);
 
-					if (game.getShipBlocksSunk() == 17) {
-						// if win
-						Toast toast = Toast.makeText(getContext(), "You have won this game with a score of " + game.getGameScore(currentPlayer), Toast.LENGTH_LONG);
-						toast.show();
+					if (game.getShipBlocksSunk(oppositePlayer) == 17) {
+						// if win - 17 is number of ship blocks.
 						
 						dbScores.addScore(game.getStrCurrentPlayer(),game.getGameScore(currentPlayer));
 						
 						
-						showRestart(); // TODO This isnt working 
+						showRestart();
 						
 						
 					} else {
@@ -142,10 +144,35 @@ public class BoardViewGame extends BoardView{
 					game.touchGridOf(touchedColumn, touchedRow, Game.ACTION_MISS, oppositePlayer);
 					game.addToGameScore(Game.SCORE_MISS, currentPlayer);
 				}
+			
+				invalidate();
+
+				final Handler handler = new Handler();
+				handler.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						// Delays by 1000ms
+						// changes player to player 2 so that it can show player
+						// 2's screen;
+						game.changePlayerFrom(game.getPlayer());
+						invalidate();
+					}
+				}, 1000);
+
+				handler.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						// Delays by 1000ms
+						// changes player to player 2 so that it can show player
+						// 1's screen;
+						game.changePlayerFrom(game.getPlayer());
+						invalidate();
+					}
+				}, 1000); // Delays value in ms
 			}
 
-			invalidate();
-			return false;
+			//invalidate();
+			return true;
 		}
 	}
 	
@@ -153,12 +180,13 @@ public class BoardViewGame extends BoardView{
 	public void showRestart(){
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-		builder.setMessage("You won!");
+		builder.setMessage("You won with a score of " + game.getGameScore(Game.PLAYER_ONE));
 		builder.setPositiveButton("Restart", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
             	Intent intent = new Intent(getContext(),
 						StartMenu.class);
 
+            	//restarts game
 				game = null;
 	            getContext().startActivity(intent);
             }
