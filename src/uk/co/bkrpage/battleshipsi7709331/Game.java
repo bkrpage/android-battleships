@@ -14,8 +14,9 @@ public class Game {
 	private final int[][] player1Grid;
 	private final int[][] player2Grid;
 	
-	private int shipCount[];
-	private int shipBlocksSunk;
+	//private int shipCount[];
+	private int shipBlocksSunk[] = new int[2];
+	
 	
 	private static int shipSize = 0;
 	private static boolean shipOrientation = true;
@@ -39,7 +40,8 @@ public class Game {
 		shipsSet[PLAYER_ONE] = false;
 		shipsSet[PLAYER_TWO] = false;
 		
-		shipBlocksSunk = 0;
+		shipBlocksSunk[PLAYER_ONE] = 0;
+		shipBlocksSunk[PLAYER_TWO] = 0;
 		
 		strCurrentPlayer = "Player 1";
 		strOppositePlayer = "Player 2";
@@ -161,8 +163,8 @@ public class Game {
 		return false;
 	}
 	
-	public void sinkShipBlock(){
-		this.shipBlocksSunk++;
+	public void sinkShipBlock(int player){
+		this.shipBlocksSunk[player]++;
 	}
 	
 	public void addToGameScore(int addition, int player){
@@ -249,17 +251,17 @@ public class Game {
 		return player2Grid[column][row];
 	}
 	
-	public int getShipCount(int player){
-		return shipCount[player];
-	}
-	
-	public int getShipCountLength(){
-		return getShipCount().length;
-	}
-
-	public int[] getShipCount() {
-		return shipCount;
-	}
+//	public int getShipCount(int player){
+//		return shipCount[player];
+//	}
+//	
+//	public int getShipCountLength(){
+//		return getShipCount().length;
+//	}
+//
+//	public int[] getShipCount() {
+//		return shipCount;
+//	}
 
 	public int getShipSize() {
 		return shipSize;
@@ -281,8 +283,8 @@ public class Game {
 		return gameScore[player];
 	}
 
-	public int getShipBlocksSunk() {
-		return shipBlocksSunk;
+	public int getShipBlocksSunk(int player) {
+		return shipBlocksSunk[player];
 	}
 
 	public boolean getShipsSet(int player) {
@@ -301,13 +303,9 @@ public class Game {
 		this.gameScore[player] = gameScore;
 	}
 
-	public void setShipCount(int shipCount[]) {
-		this.shipCount = shipCount;
-	}
-
-	public void setShipBlocksSunk(int shipBlocksSunk) {
-		this.shipBlocksSunk = shipBlocksSunk;
-	}
+//	public void setShipCount(int shipCount[]) {
+//		this.shipCount = shipCount;
+//	}
 	
 	public void setShipsSet(boolean shipsSet, int player) {
 		this.shipsSet[player] = shipsSet;
