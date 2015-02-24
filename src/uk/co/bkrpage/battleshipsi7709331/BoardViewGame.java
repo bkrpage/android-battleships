@@ -23,7 +23,6 @@ public class BoardViewGame extends BoardView{
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-
 		
 		float diameter = calcDiam();
 		float separator = (float) (diameter * SEPARATOR_RATIO);
@@ -34,7 +33,6 @@ public class BoardViewGame extends BoardView{
 			for (int row = 0; row < game.getRows(); row++) {
 				Paint paint;
 				actionAtPos = game.getOppositePlayerGrid(col, row);
-
 				
 				if (actionAtPos == Game.ACTION_MISS) {
 					paint = getMissPaint();
@@ -46,20 +44,17 @@ public class BoardViewGame extends BoardView{
 					paint = getBGPaint();
 				}
 
+				// Calculates co-ordinates for the grid squares
 				float ls = separator + (diameter + separator) * col; // left
-																		// Coordinate
 				float ts = separator + (diameter + separator) * row; // top
-																		// coordinate
 				float rs = separator + diameter + (diameter + separator) * col; // right
-																				// coordinate
 				float bs = separator + diameter + (diameter + separator) * row; // bottom
-																				// coordinate
-
+																			
 				canvas.drawRect(ls, ts, rs, bs, paint);
 			}
 		}
 		
-
+		// This is the code that draws the info below the grid
 		canvas.drawText("Your score is: " + game.getGameScore(game.getPlayer()) , 15, (separator+diameter)* 10 + 25, getTextPaint());
 		canvas.drawText(game.getShipBlocksSunk(game.getOppositePlayer()) + " / 17 blocks sunk", 15,(separator+diameter)* 10 + 50, getTextPaint() );
 
@@ -89,39 +84,31 @@ public class BoardViewGame extends BoardView{
 			int currentPlayer = game.getPlayer();
 			int oppositePlayer = game.getOppositePlayer();
 			
-			
+			// Calculations based on co-ordinates and grid measurements to get the column and row touched
 			touchedColumn = (int) Math.floor(touchX
 					/ ((separator + diameter) * Game.DEFAULT_COLUMNS) * 10);
 			touchedRow = (int) Math.floor(touchY
 					/ ((separator + diameter) * Game.DEFAULT_ROWS) * 10);
 			
-
-			if (touchedColumn <= 9 && touchedRow <= 9) { 
-				
+			if (touchedColumn <= 9 && touchedRow <= 9) { // Error prevention - NullPointers if touching outside grid without this statement
 				if (game.getOppositePlayerGrid(touchedColumn, touchedRow) == Game.ACTION_SHIP) {
 
-					game.touchGridOf(touchedColumn, touchedRow, Game.ACTION_HIT, oppositePlayer); // ship
-																					// hit
+					game.touchGridOf(touchedColumn, touchedRow, Game.ACTION_HIT, oppositePlayer); // ship hit
 					game.addToGameScore(Game.SCORE_HIT, currentPlayer);
 					game.sinkShipBlock(oppositePlayer);
 
 					if (game.getShipBlocksSunk(oppositePlayer) == 17) {
 						// if win - 17 is number of ship blocks.
-						
 						dbScores.addScore(game.getStrCurrentPlayer(),game.getGameScore(currentPlayer));
-						
-						
 						showRestart(true);
-						
-						
 					} else {
 						Toast toast = Toast.makeText(getContext(), "Ship Hit", Toast.LENGTH_SHORT);
 						toast.show();
 					}
-
+					
 				} else if (game.getOppositePlayerGrid(touchedColumn, touchedRow) != Game.ACTION_MISS
 						&& game.getOppositePlayerGrid(touchedColumn, touchedRow) != Game.ACTION_HIT) {
-
+					// if the co-ord is not already hit or missed.
 					game.touchGridOf(touchedColumn, touchedRow, Game.ACTION_MISS, oppositePlayer);
 					game.addToGameScore(Game.SCORE_MISS, currentPlayer);
 				}
@@ -129,20 +116,23 @@ public class BoardViewGame extends BoardView{
 			
 			game.computerPlay();
 			
+			// Checks if the computer has won.
 			if(game.getShipBlocksSunk(currentPlayer) == 17){
-
 				showRestart(false);
 			}
 			
-
-			invalidate();
+			invalidate(); //redraw
 			return true;
 		}
 	}
 	
-
+	/**
+	 * This method shows a dialog box to restart the game after a player or
+	 * computer win
+	 * @param win 	If the human player has won.
+	 */
 	public void showRestart(boolean win){
-
+		
 		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 		if (win){
 			builder.setMessage("You won with a score of " + game.getGameScore(Game.PLAYER_ONE));
@@ -155,13 +145,11 @@ public class BoardViewGame extends BoardView{
 			public void onClick(DialogInterface dialog, int id) {
             	Intent intent = new Intent(getContext(),
 						StartMenu.class);
-
             	//restarts game
 				game = null;
 	            getContext().startActivity(intent);
             }
         });
-
 		builder.show();
 	}
 

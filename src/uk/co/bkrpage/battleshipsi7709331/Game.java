@@ -15,9 +15,7 @@ public class Game {
 	private final int[][] player1Grid;
 	private final int[][] player2Grid;
 	
-	//private int shipCount[];
 	private int shipBlocksSunk[] = new int[2];
-	
 	
 	private static int shipSize = 0;
 	private static boolean shipOrientation = true;
@@ -29,7 +27,11 @@ public class Game {
 	
 	private boolean[] shipsSet = new boolean[2];
 	
-	
+	/**
+	 * Creates an empty game object.
+	 * @param columns Amount of columns in the game
+	 * @param rows Amount of rows in the game.
+	 */
 	public Game(int columns, int rows) {
 		setColumns = columns;
 		setRows = rows;
@@ -51,18 +53,19 @@ public class Game {
 	}
 	
 	/**
+	 * Checks if a ship placement is valid.
 	 * @param column	The x grid co-ordinate of the ship
 	 * @param row		The y grid co-ordinate of the ship
 	 * @param size		The size (in blocks) of the ship
 	 * @param horiz 	Is the ship Horizontal? x and y co-ords are the top left of the ship at all time.
 	 * @param player	The player of the board that is being checked.
+	 * @return If the ship specified is valid.
 	 */
 	public boolean isShipValid(int column, int row, int size, boolean horiz, int player){
 		boolean valid = true;
 		
 		for (int i = 0; i <= size; i++) {
-			if (player == PLAYER_ONE) 
-			{
+			if (player == PLAYER_ONE){ 
 				if ((horiz && column + i >= 10)
 						|| (horiz && (player1Grid[column + i][row] == ACTION_SHIP))) {
 					valid = false;
@@ -71,16 +74,12 @@ public class Game {
 					valid = false;
 				}
 			} 
-			else if (player == PLAYER_TWO)
-			{
+			else if (player == PLAYER_TWO){
 				if ((horiz && column + i >= 10)
-						|| (horiz && (player2Grid[column + i][row] == ACTION_SHIP))) 
-				{
+						|| (horiz && (player2Grid[column + i][row] == ACTION_SHIP))) {
 					valid = false;
-				} 
-				else if ((!horiz && row + i >= 10)
-						|| (!horiz && (player2Grid[column][row + i] == ACTION_SHIP))) 
-				{
+				} else if ((!horiz && row + i >= 10)
+						|| (!horiz && (player2Grid[column][row + i] == ACTION_SHIP))) {
 					valid = false;
 				}
 			}
@@ -89,6 +88,15 @@ public class Game {
 		return valid;
 	}
 	
+	/**
+	 * Places a ship at the specified position. Uses isShipValid() to check before placement.
+	 * @param column	The x grid co-ordinate of the ship
+	 * @param row		The y grid co-ordinate of the ship
+	 * @param size		The size (in blocks) of the ship
+	 * @param horiz 	Is the ship Horizontal? x and y co-ords are the top left of the ship at all time.
+	 * @param player	The player of the board that is being checked.
+	 * @return If the ship specified is placed.
+	 */
 	public boolean placeShip(int column, int row, int size, boolean horiz, int player){
 		boolean valid = false;
 		
@@ -128,7 +136,7 @@ public class Game {
 	}
 		
 	/**
-	 * Places 5 ships - 5, 4, 3, 3, 2 - on the specified game board.
+	 * Places 5 ships of sizes 5, 4, 3, 3, 2  on the specified game board.
 	 * 
 	 * @param player Should be game variable Game.PLAYER_ONE or Game.PLAYER_TWO This is the Board thatt he ships will be placed on.
 	 */
@@ -145,6 +153,7 @@ public class Game {
 		}
 	}
 
+	// TODO Javadocs
 	public boolean touchGridOf(int column, int row, int action, int player) {
 		for (int iRow = 0; iRow < setRows; ++iRow) {
 			for (int jCol = 0; jCol < setColumns; jCol++) {

@@ -13,6 +13,8 @@ public class BoardView extends View {
 		init();
 	}
 	
+	// This adds onto onMeasure and makes the view rectangular based on width of screen
+	// This is so that I can draw text below the grid.
 	@Override
 	public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 	    super.onMeasure(widthMeasureSpec, widthMeasureSpec + 50);
@@ -25,7 +27,9 @@ public class BoardView extends View {
 	private Paint gridPaint, shipPaint, missPaint, hitPaint, bGPaint, textPaint;
 	
 
-	// The calculations to find the best dimensions for the grid.
+	/**
+	 * @return Diameter of grid items based on the device width and default columns
+	 */
 	float calcDiam(){
 		float calcX =(float) Math.floor(getWidth()
 				/ (Game.DEFAULT_COLUMNS + (Game.DEFAULT_COLUMNS + 1)
@@ -37,9 +41,12 @@ public class BoardView extends View {
 		return diameter;
 	}
 
+	/**
+	 *  To be started when the view is created.
+	 */
 	public void init(){
 		
-		if(game == null){
+		if(game == null){ // So it doesnt restart the game if there is already oe running.
 			 game = new Game(Game.DEFAULT_COLUMNS, Game.DEFAULT_ROWS);
 		}
 
