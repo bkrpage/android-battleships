@@ -21,6 +21,7 @@ public class StartMenu extends Activity {
 		final Button btnClose = (Button) findViewById(R.id.btnClose);
 		
 		btnPlayComputer.setOnClickListener(new OnClickListener(){
+			@Override
 			public void onClick(View v){
 				
 				Intent intent = new Intent(getApplicationContext(), ShipPlacement.class);
@@ -30,6 +31,7 @@ public class StartMenu extends Activity {
 		});
 		
 		btnLeaderboards.setOnClickListener(new OnClickListener(){
+			@Override
 			public void onClick(View v){
 				
 				Intent intent = new Intent(getApplicationContext(), ScoreActivity.class);
@@ -39,6 +41,7 @@ public class StartMenu extends Activity {
 		});
 		
 		btnClose.setOnClickListener(new OnClickListener(){
+			@Override
 			public void onClick(View v){
 				System.exit(0);
 			}

@@ -28,6 +28,7 @@ public class ScoreView extends View{
 		textPaint.setTextSize(25);
 	}
 	
+	@Override
 	public void onDraw(Canvas canvas){
 		super.onDraw(canvas);
 		

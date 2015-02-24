@@ -22,7 +22,8 @@ public class HighScoreDB extends SQLiteOpenHelper{
     	  super(context, dbName, null,1); 
     	  }
     
-    public void onCreate(SQLiteDatabase db) {
+    @Override
+	public void onCreate(SQLiteDatabase db) {
     	  
     	// This creates score table
     	db.execSQL("CREATE TABLE " + scoreTable + " ("
@@ -38,7 +39,8 @@ public class HighScoreDB extends SQLiteOpenHelper{
         return db;
     }
     
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    @Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     	  
     	  db.execSQL("DROP TABLE IF EXISTS " + scoreTable);
     	  
