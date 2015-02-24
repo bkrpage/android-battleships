@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -123,7 +122,13 @@ public class HighScoreDB extends SQLiteOpenHelper{
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		
-		db.execSQL("DELETE * FROM " + scoreTable);
+		db.execSQL("DROP TABLE IF EXISTS " + scoreTable);
+		
+    	db.execSQL("CREATE TABLE " + scoreTable + " ("
+    			+ attID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+    			+ attName + " TEXT, "
+    			+ attScore +" INTEGER NOT NULL);"
+    	);
 
 		db.close();
 	}

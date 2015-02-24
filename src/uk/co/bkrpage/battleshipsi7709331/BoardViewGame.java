@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -59,9 +58,12 @@ public class BoardViewGame extends BoardView{
 			}
 		}
 		
-		
+
 		canvas.drawText("Your score is: " + game.getGameScore(game.getPlayer()) + " - Current Highscore: " + dbScores.getHighScore() , 15, (separator+diameter)* 10 + 25, getTextPaint());
-		canvas.drawText("Currently on " + game.getStrCurrentPlayer() + "'s turn - Wait for " + game.getStrOppositePlayer() + "'s Turn", 15,(separator+diameter)* 10 + 50, getTextPaint() );
+		canvas.drawText(game.getShipBlocksSunk(game.getOppositePlayer()) + " / 17 blocks sunk", 15,(separator+diameter)* 10 + 50, getTextPaint() );
+
+		canvas.drawText("Computer's Score: " + game.getGameScore(game.getOppositePlayer()) , (separator + diameter) * 7, (separator+diameter)* 10 + 25, getTextPaint());
+		canvas.drawText(game.getShipBlocksSunk(game.getPlayer()) + " / 17 blocks sunk",(separator + diameter) * 7,(separator+diameter)* 10 + 50, getTextPaint() );
 	}
 
 	class mListener extends GestureDetector.SimpleOnGestureListener {
@@ -93,11 +95,8 @@ public class BoardViewGame extends BoardView{
 					/ ((separator + diameter) * Game.DEFAULT_ROWS) * 10);
 			
 
-			if (touchedColumn <= 9 && touchedRow <= 9) { // checks if the player
-															// is clicking
-															// inside the grid
+			if (touchedColumn <= 9 && touchedRow <= 9) { 
 				
-				//loops for player
 				if (game.getOppositePlayerGrid(touchedColumn, touchedRow) == Game.ACTION_SHIP) {
 
 					game.touchGridOf(touchedColumn, touchedRow, Game.ACTION_HIT, oppositePlayer); // ship
@@ -111,7 +110,7 @@ public class BoardViewGame extends BoardView{
 						dbScores.addScore(game.getStrCurrentPlayer(),game.getGameScore(currentPlayer));
 						
 						
-						showRestart();
+						showRestart(true);
 						
 						
 					} else {
@@ -125,43 +124,30 @@ public class BoardViewGame extends BoardView{
 					game.touchGridOf(touchedColumn, touchedRow, Game.ACTION_MISS, oppositePlayer);
 					game.addToGameScore(Game.SCORE_MISS, currentPlayer);
 				}
-			
-				invalidate();
-
-				final Handler handler = new Handler();
-				handler.postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						// Delays by 1000ms
-						// changes player to player 2 so that it can show player
-						// 2's screen;
-						game.changePlayerFrom(game.getPlayer());
-						invalidate();
-					}
-				}, 1000);
-
-				handler.postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						// Delays by 1000ms
-						// changes player to player 2 so that it can show player
-						// 1's screen;
-						game.changePlayerFrom(game.getPlayer());
-						invalidate();
-					}
-				}, 1000); // Delays value in ms
 			}
+			
+			game.computerPlay();
+			
+			if(game.getShipBlocksSunk(currentPlayer) == 17){
 
-			//invalidate();
+				showRestart(false);
+			}
+			
+
+			invalidate();
 			return true;
 		}
 	}
 	
 
-	public void showRestart(){
+	public void showRestart(boolean win){
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-		builder.setMessage("You won with a score of " + game.getGameScore(Game.PLAYER_ONE));
+		if (win){
+			builder.setMessage("You won with a score of " + game.getGameScore(Game.PLAYER_ONE));
+		} else {
+			builder.setMessage("You lost!");
+		}
 		builder.setPositiveButton("Restart", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
             	Intent intent = new Intent(getContext(),
