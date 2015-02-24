@@ -10,14 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/against_computer" />
-
-    <Button
-        android:id="@+id/btnPlayHuman"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="@string/against_human" />
+        android:text="@string/playGame" />
 
     <Button
         android:id="@+id/btnLeaderboards"

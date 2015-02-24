@@ -2,6 +2,7 @@ package uk.co.bkrpage.battleshipsi7709331;
 
 import java.util.Random;
 
+
 public class Game {
 	public static final int DEFAULT_COLUMNS = 10, DEFAULT_ROWS = 10, PLAYERS = 2;
 	public static final int ACTION_HIT = 3, ACTION_MISS = 2, ACTION_SHIP = 1;
@@ -161,6 +162,39 @@ public class Game {
 			}
 		}
 		return false;
+	}
+	
+	public void computerPlay(){
+		Random rand = new Random();
+		
+		int column; 
+		int row;
+		
+		column = rand.nextInt(10);
+		row = rand.nextInt(10);
+		boolean shot = false;
+		
+		while(!shot){
+			
+			if (getCurrentPlayerGrid(column, row) == ACTION_SHIP) {
+	
+				touchGridOf(column, row, ACTION_HIT, getPlayer()); 													
+				addToGameScore(SCORE_HIT, getOppositePlayer());
+				
+				sinkShipBlock(getPlayer());
+				shot = true;
+	
+			} else if (getCurrentPlayerGrid(column, row) != Game.ACTION_MISS
+					&& getCurrentPlayerGrid(column, row) != Game.ACTION_HIT) {
+	
+				touchGridOf(column, row, ACTION_MISS, getPlayer());
+				
+				addToGameScore(SCORE_MISS, getOppositePlayer());
+				shot = true;
+			}
+			column = rand.nextInt(10);
+			row = rand.nextInt(10);
+		}
 	}
 	
 	public void sinkShipBlock(int player){

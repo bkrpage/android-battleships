@@ -29,5 +29,17 @@
     <string name="close">Exit Game</string>
     <string name="title_activity_score">High Scores</string>
     <string name="players_ships">These are your ship placements</string>
+    <string name="score_title">High Scores</string>
+    <string name="position_1">"1. "</string>
+    <string name="position_2">"2. "</string>
+    <string name="position_3">"3. "</string>
+    <string name="position_4">"4. "</string>
+    <string name="position_5">"5. "</string>
+    <string name="position_6">"6. "</string>
+    <string name="position_7">"7. "</string>
+    <string name="position_8">"8. "</string>
+    <string name="position_9">"9. "</string>
+    <string name="position_10">"10. "</string>
+    <string name="reset_scores">Reset Scores</string>
 
 </resources>
