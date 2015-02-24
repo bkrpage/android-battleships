@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.graphics.PorterDuff;
 
 public class StartMenu extends Activity {
 
@@ -20,6 +21,7 @@ public class StartMenu extends Activity {
 		//final Button btnHelp = (Button) findViewById(R.id.btnHelp); TODO
 		final Button btnClose = (Button) findViewById(R.id.btnClose);
 		
+		btnPlayComputer.getBackground().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);
 		btnPlayComputer.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v){
@@ -29,7 +31,8 @@ public class StartMenu extends Activity {
 				startActivity(intent);
 			}
 		});
-		
+
+		btnLeaderboards.getBackground().setColorFilter(0xFF0000FF, PorterDuff.Mode.MULTIPLY);
 		btnLeaderboards.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v){
@@ -39,7 +42,8 @@ public class StartMenu extends Activity {
 				startActivity(intent);
 			}
 		});
-		
+
+		btnClose.getBackground().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);
 		btnClose.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v){

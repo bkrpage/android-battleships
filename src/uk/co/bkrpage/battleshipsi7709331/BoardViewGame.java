@@ -60,11 +60,11 @@ public class BoardViewGame extends BoardView{
 		}
 		
 
-		canvas.drawText("Your score is: " + game.getGameScore(game.getPlayer()) + " - Current Highscore: " + dbScores.getHighScore() , 15, (separator+diameter)* 10 + 25, getTextPaint());
+		canvas.drawText("Your score is: " + game.getGameScore(game.getPlayer()) , 15, (separator+diameter)* 10 + 25, getTextPaint());
 		canvas.drawText(game.getShipBlocksSunk(game.getOppositePlayer()) + " / 17 blocks sunk", 15,(separator+diameter)* 10 + 50, getTextPaint() );
 
-		canvas.drawText("Computer's Score: " + game.getGameScore(game.getOppositePlayer()) , (separator + diameter) * 7, (separator+diameter)* 10 + 25, getTextPaint());
-		canvas.drawText(game.getShipBlocksSunk(game.getPlayer()) + " / 17 blocks sunk",(separator + diameter) * 7,(separator+diameter)* 10 + 50, getTextPaint() );
+		canvas.drawText("Computer's Score: " + game.getGameScore(game.getOppositePlayer()) , (separator + diameter) * 5, (separator+diameter)* 10 + 25, getTextPaint());
+		canvas.drawText(game.getShipBlocksSunk(game.getPlayer()) + " / 17 blocks sunk",(separator + diameter) * 5,(separator+diameter)* 10 + 50, getTextPaint() );
 	}
 
 	class mListener extends GestureDetector.SimpleOnGestureListener {
@@ -149,6 +149,7 @@ public class BoardViewGame extends BoardView{
 		} else {
 			builder.setMessage("You lost!");
 		}
+		builder.setCancelable(false);
 		builder.setPositiveButton("Restart", new DialogInterface.OnClickListener() {
             @Override
 			public void onClick(DialogInterface dialog, int id) {
