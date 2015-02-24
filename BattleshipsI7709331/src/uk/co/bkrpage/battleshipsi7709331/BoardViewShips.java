@@ -11,6 +11,8 @@ public class BoardViewShips extends BoardView {
 		super(context, attrs);
 	}
 	
+	// I need to add on the ship placement so that it only starts in 
+	// this view only and not for every subclass of BoardView
 	@Override
 	public void init(){
 		super.init(); 
@@ -34,8 +36,6 @@ public class BoardViewShips extends BoardView {
 				Paint paint;
 				actionAtPos = game.getPlayer1Grid(col, row);
 
-				// TODO Convert this code into correct functions - basically
-				// treating it as one player.
 				if (actionAtPos == Game.ACTION_SHIP) {
 					paint = getShipPaint();
 				} else if (actionAtPos == Game.ACTION_MISS) {
@@ -47,20 +47,13 @@ public class BoardViewShips extends BoardView {
 				}
 
 				float ls = separator + (diameter + separator) * col; // left
-																		// Coordinate
 				float ts = separator + (diameter + separator) * row; // top
-																		// coordinate
 				float rs = separator + diameter + (diameter + separator) * col; // right
-																				// coordinate
 				float bs = separator + diameter + (diameter + separator) * row; // bottom
-																				// coordinate
 
 				canvas.drawRect(ls, ts, rs, bs, paint);
 			}
 		}
-
-		//String strShipCount = Integer.toString(bGame.getShipCount()[0] + 1); 
-		// TODO Make array position dependent on the current player.
 
 	}
 
