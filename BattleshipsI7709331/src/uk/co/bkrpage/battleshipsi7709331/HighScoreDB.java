@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -31,6 +32,11 @@ public class HighScoreDB extends SQLiteOpenHelper{
     			+ attScore +" INTEGER NOT NULL);"
     	);
     	  
+    }
+    
+    public SQLiteDatabase openDB(SQLiteDatabase db) {
+        db = this.getWritableDatabase();
+        return db;
     }
     
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -98,7 +104,7 @@ public class HighScoreDB extends SQLiteOpenHelper{
 	   SQLiteDatabase db = this.getReadableDatabase();
 	   Cursor cursor = db.rawQuery("SELECT * FROM " + scoreTable + " ORDER BY " + attScore + " DESC", null);
 	   
-	   String scoreName = "";
+	   String scoreName;
 	   
 	   if(cursor.moveToFirst()){
 		   do {
