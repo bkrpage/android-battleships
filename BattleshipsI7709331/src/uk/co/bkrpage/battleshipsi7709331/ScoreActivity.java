@@ -64,6 +64,7 @@ public class ScoreActivity extends Activity {
 		
 		
 		btnReset.setOnClickListener(new OnClickListener(){
+			@Override
 			public void onClick(View v){
 				db.resetScores();
 				

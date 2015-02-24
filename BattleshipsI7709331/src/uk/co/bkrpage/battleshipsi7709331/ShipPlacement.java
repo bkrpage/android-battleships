@@ -18,6 +18,7 @@ public class ShipPlacement extends Activity {
 		final Button btnPlayGame = (Button) findViewById(R.id.btnPlayGame);
 		
 		btnPlayGame.setOnClickListener(new OnClickListener(){
+			@Override
 			public void onClick(View v){
 				Intent intent = new Intent(getApplicationContext(), GameActivity.class);
 				startActivity(intent);
@@ -25,6 +26,7 @@ public class ShipPlacement extends Activity {
 		});
 	}
 	
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
 	    if ((keyCode == KeyEvent.KEYCODE_BACK))

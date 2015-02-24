@@ -20,6 +20,7 @@ public class BoardViewGame extends BoardView{
 		super(context, attrs);
 	}
 	
+	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
@@ -149,7 +150,8 @@ public class BoardViewGame extends BoardView{
 			builder.setMessage("You lost!");
 		}
 		builder.setPositiveButton("Restart", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
+            @Override
+			public void onClick(DialogInterface dialog, int id) {
             	Intent intent = new Intent(getContext(),
 						StartMenu.class);
 

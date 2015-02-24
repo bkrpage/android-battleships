@@ -11,6 +11,7 @@ public class BoardViewShips extends BoardView {
 		super(context, attrs);
 	}
 	
+	@Override
 	public void init(){
 		super.init(); 
 
@@ -19,6 +20,7 @@ public class BoardViewShips extends BoardView {
 		
 	}
 
+	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
