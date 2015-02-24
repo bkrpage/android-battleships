@@ -14,31 +14,12 @@ import android.view.MotionEvent;
 import android.widget.Toast;
 
 public class BoardViewGame extends BoardView{
-	
-	private boolean shipsSet = false;
 
 	private HighScoreDB dbScores = new HighScoreDB(getContext());
 
 	public BoardViewGame(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
-	
-	
-	public void init(){
-		super.init();
-		
-		if (!shipsSet){
-			for (int i = 0; i <= 4 ; i++ ){
-				if (i <= 1){
-					game.placeRandomShip(i + 1, 2);
-				} else {
-					game.placeRandomShip(i, 2);
-				}
-			}
-			shipsSet = true;
-		}
-	}
-	
 	
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
