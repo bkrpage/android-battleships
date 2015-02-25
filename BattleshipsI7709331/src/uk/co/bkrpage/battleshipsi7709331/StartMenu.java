@@ -18,7 +18,6 @@ public class StartMenu extends Activity {
 
 		final Button btnPlayComputer = (Button) findViewById(R.id.btnPlayComputer);
 		final Button btnLeaderboards = (Button) findViewById(R.id.btnLeaderboards);
-		//final Button btnHelp = (Button) findViewById(R.id.btnHelp); TODO
 		final Button btnClose = (Button) findViewById(R.id.btnClose);
 		
 		btnPlayComputer.getBackground().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);

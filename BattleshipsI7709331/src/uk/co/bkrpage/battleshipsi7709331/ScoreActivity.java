@@ -56,7 +56,8 @@ public class ScoreActivity extends Activity {
 		} else {
 			positions = txtScore.length;
 		}
-		
+
+		// Places the entries of the score and name array lists into the score textviews
 		for (int i = 0; i < positions; i++){
 			txtScore[i].setText(Integer.toString(scores.get(i)));
 			txtName[i].setText(names.get(i));

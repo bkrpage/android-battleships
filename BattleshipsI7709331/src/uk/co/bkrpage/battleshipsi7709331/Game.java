@@ -153,7 +153,14 @@ public class Game {
 		}
 	}
 
-	// TODO Javadocs
+	/**
+	 * To be called on a single play - will only hit empty or ship-taken blocks.
+	 * @param column Column co-ordinate of hit
+	 * @param row Row co-ordinate of hit
+	 * @param action Game.ACTION_HIT or Game.ACTION_MISS
+	 * @param player the player of the grid to be hit.
+	 * @return Returns true if grid is hit - will only hit empty or ship-taken blocks.
+	 */
 	public boolean touchGridOf(int column, int row, int action, int player) {
 		for (int iRow = 0; iRow < setRows; ++iRow) {
 			for (int jCol = 0; jCol < setColumns; jCol++) {
@@ -172,7 +179,10 @@ public class Game {
 		}
 		return false;
 	}
-	
+	/**
+	 * Plays the computers go - only to be used in single player games.
+	 * Will place a shot if valid and only once.
+	 */
 	public void computerPlay(){
 		Random rand = new Random();
 		
@@ -183,7 +193,7 @@ public class Game {
 		row = rand.nextInt(10);
 		boolean shot = false;
 		
-		while(!shot){
+		while(!shot){ // To make sure it  doesn't hit twice
 			
 			if (getCurrentPlayerGrid(column, row) == ACTION_SHIP) {
 	
@@ -206,36 +216,16 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * Adds one to amount of blocks sunk for the specified player
+	 * @param player The player to add score to.
+	 */
 	public void sinkShipBlock(int player){
 		this.shipBlocksSunk[player]++;
 	}
 	
 	public void addToGameScore(int addition, int player){
 		this.gameScore[player] += addition;
-	}
-	
-	public void changePlayerFrom(int player) {
-
-		if (player == PLAYER_ONE) {
-			currentPlayer = PLAYER_TWO;
-			strOppositePlayer = "Player 1";
-			strCurrentPlayer = "Player 2";
-		} else {
-			currentPlayer = PLAYER_ONE;
-			strCurrentPlayer = "Player 1";
-			strOppositePlayer = "Player 2";
-		}
-	}
-	
-	public void setPlayer(int player){
-		currentPlayer = player;
-		
-		// Set the string values
-		if (player == PLAYER_ONE){
-			strCurrentPlayer = "Player 1";
-		} else if (player == PLAYER_TWO) {
-			strCurrentPlayer = "Player 2";
-		}
 	}
 	
 	public int getPlayer(){
@@ -293,18 +283,6 @@ public class Game {
 	public int getPlayer2Grid(int column, int row) {
 		return player2Grid[column][row];
 	}
-	
-//	public int getShipCount(int player){
-//		return shipCount[player];
-//	}
-//	
-//	public int getShipCountLength(){
-//		return getShipCount().length;
-//	}
-//
-//	public int[] getShipCount() {
-//		return shipCount;
-//	}
 
 	public int getShipSize() {
 		return shipSize;
@@ -345,10 +323,6 @@ public class Game {
 	public void setGameScore(int gameScore, int player) {
 		this.gameScore[player] = gameScore;
 	}
-
-//	public void setShipCount(int shipCount[]) {
-//		this.shipCount = shipCount;
-//	}
 	
 	public void setShipsSet(boolean shipsSet, int player) {
 		this.shipsSet[player] = shipsSet;
