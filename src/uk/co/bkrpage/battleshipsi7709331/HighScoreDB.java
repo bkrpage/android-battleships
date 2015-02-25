@@ -10,11 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class HighScoreDB extends SQLiteOpenHelper{ 
     
-    static final String dbName = "HighScores";
-    static final String scoreTable = "Scores";
-    static final String attID = "ScoreID";
-    static final String attName = "ScoreName";
-    static final String attScore = "Score";
+    static final String dbName = "HighScores", scoreTable = "Scores", attID = "ScoreID",
+    		attName = "ScoreName", attScore = "Score";
     
     static final String viewScore = "ViewScore";
 
@@ -24,7 +21,6 @@ public class HighScoreDB extends SQLiteOpenHelper{
     
     @Override
 	public void onCreate(SQLiteDatabase db) {
-    	  
     	// This creates score table
     	db.execSQL("CREATE TABLE " + scoreTable + " ("
     			+ attID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -34,19 +30,18 @@ public class HighScoreDB extends SQLiteOpenHelper{
     	  
     }
     
-    public SQLiteDatabase openDB(SQLiteDatabase db) {
-        db = this.getWritableDatabase();
-        return db;
-    }
-    
+    // Executed if I upgrade the database above version 1.
     @Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    	  
     	  db.execSQL("DROP TABLE IF EXISTS " + scoreTable);
-    	  
     	  onCreate(db);
     }
     
+    /**
+     * Adds the score to the database
+     * @param player Players to be named in the score
+     * @param score Score to be entered into the database.
+     */
 	public void addScore(String player, int score) {
 
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -58,23 +53,9 @@ public class HighScoreDB extends SQLiteOpenHelper{
 		db.close();
 	}
 	
-	public int getHighScore(){
-		
-		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cursor = db.rawQuery("SELECT * FROM " + scoreTable
-				+ " ORDER BY " + attScore + " DESC;", null);
-
-		int score = 0;
-
-		if (cursor.moveToFirst()) {
-			score = Integer.parseInt(cursor.getString(2));
-		}
-
-		cursor.close();
-		
-		return score;
-	}
-	
+	/**
+	 * @return An array list containing cores in Descending order.
+	 */
 	public ArrayList<Integer> getScores() {
 
 		ArrayList<Integer> highScore = new ArrayList<Integer>();
@@ -98,6 +79,10 @@ public class HighScoreDB extends SQLiteOpenHelper{
 
 	}
 	
+	/**
+	 * 
+	 * @return Array List of score names ordered by scores in descending order.
+	 */
 	public ArrayList<String> getScoreNames(){
 		
 		ArrayList<String> name = new ArrayList<String>();
@@ -120,12 +105,15 @@ public class HighScoreDB extends SQLiteOpenHelper{
 	   
 	}
 	
+	/**
+	 * Deletes the score table and re-creates an empty one.
+	 */
 	public void resetScores(){
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 		db.execSQL("DROP TABLE IF EXISTS " + scoreTable);
-		
+		// re-creates the table to prevent errors.
     	db.execSQL("CREATE TABLE " + scoreTable + " ("
     			+ attID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
     			+ attName + " TEXT, "

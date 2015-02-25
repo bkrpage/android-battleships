@@ -4,9 +4,7 @@
     <string name="app_name">Battleships!</string>
     <string name="app_author">Bradley Page (i7709331)</string>
     <string name="playGame">Play Game</string>
-    <string name="title_activity_start_menu">Menu</string>
     <string name="leaderboards">Leaderboards</string>
-    <string name="help">Help</string>
     <string name="close">Exit Game</string>
     <string name="title_activity_score">High Scores</string>
     <string name="players_ships">These are your ship placements</string>
