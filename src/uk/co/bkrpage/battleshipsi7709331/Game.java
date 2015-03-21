@@ -12,13 +12,10 @@ public class Game {
 
 	private final int setColumns;
 	private final int setRows;
-	private final int[][] player1Grid;
-	private final int[][] player2Grid;
+	private static int[][] player1Grid;
+	private static int[][] player2Grid;
 	
 	private int shipBlocksSunk[] = new int[2];
-	
-	private static int shipSize = 0;
-	private static boolean shipOrientation = true;
 	
 	private int[] gameScore = new int[2];
 	private String strCurrentPlayer;
@@ -52,41 +49,6 @@ public class Game {
 		currentPlayer = PLAYER_ONE;
 	}
 	
-	/**
-	 * Checks if a ship placement is valid.
-	 * @param column	The x grid co-ordinate of the ship
-	 * @param row		The y grid co-ordinate of the ship
-	 * @param size		The size (in blocks) of the ship
-	 * @param horiz 	Is the ship Horizontal? x and y co-ords are the top left of the ship at all time.
-	 * @param player	The player of the board that is being checked.
-	 * @return If the ship specified is valid.
-	 */
-	public boolean isShipValid(int column, int row, int size, boolean horiz, int player){
-		boolean valid = true;
-		
-		for (int i = 0; i <= size; i++) {
-			if (player == PLAYER_ONE){ 
-				if ((horiz && column + i >= 10)
-						|| (horiz && (player1Grid[column + i][row] == ACTION_SHIP))) {
-					valid = false;
-				} else if ((!horiz && row + i >= 10)
-						|| (!horiz && (player1Grid[column][row + i] == ACTION_SHIP))) {
-					valid = false;
-				}
-			} 
-			else if (player == PLAYER_TWO){
-				if ((horiz && column + i >= 10)
-						|| (horiz && (player2Grid[column + i][row] == ACTION_SHIP))) {
-					valid = false;
-				} else if ((!horiz && row + i >= 10)
-						|| (!horiz && (player2Grid[column][row + i] == ACTION_SHIP))) {
-					valid = false;
-				}
-			}
-		}
-		
-		return valid;
-	}
 	
 	/**
 	 * Places a ship at the specified position. Uses isShipValid() to check before placement.
@@ -276,28 +238,12 @@ public class Game {
 		return grid;
 	}
 	
-	public int getPlayer1Grid(int column, int row) {
+	public static int getPlayer1Grid(int column, int row) {
 		return player1Grid[column][row];
 	}
 
-	public int getPlayer2Grid(int column, int row) {
+	public static int getPlayer2Grid(int column, int row) {
 		return player2Grid[column][row];
-	}
-
-	public int getShipSize() {
-		return shipSize;
-	}
-
-	public static void setShipSize(int size) {
-		shipSize = size;
-	}
-
-	public boolean getShipOrientation() {
-		return shipOrientation;
-	}
-
-	public static void setShipOrientation(boolean orient) {
-		shipOrientation= orient;
 	}
 
 	public int getGameScore(int player) {
