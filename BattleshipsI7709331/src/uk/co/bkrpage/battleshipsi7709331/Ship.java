@@ -4,6 +4,12 @@ public class Ship {
 	private int column, row, size;
 	private boolean isHoriz;
 
+	public Ship(int column, int row, int size, boolean isHoriz) {
+		this.column = column;
+		this.row = row;
+		this.size = size;
+		this.isHoriz = isHoriz;
+	}
 
 	/**
 	 * Checks if a placement of ship is valid

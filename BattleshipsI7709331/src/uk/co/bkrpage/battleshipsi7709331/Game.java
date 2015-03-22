@@ -15,7 +15,8 @@ public class Game {
 	private static int[][] player1Grid;
 	private static int[][] player2Grid;
 	
-	private int shipBlocksSunk[] = new int[2];
+	private Ship[][] ships;
+	private int shipBlocksSunk[] = {PLAYER_ONE, PLAYER_TWO};
 	
 	private int[] gameScore = new int[2];
 	private String strCurrentPlayer;
@@ -40,6 +41,14 @@ public class Game {
 		shipsSet[PLAYER_ONE] = false;
 		shipsSet[PLAYER_TWO] = false;
 		
+		ships = new Ship[2][5];
+		
+		for(int i = ships.length; i <= ships.length; i++){
+			for (int j = ships[i].length; j <= ships[i].length ; j++){
+				ships[i][j] = new Ship(0,0,0,true); // sets initial values for ship object.		
+			}
+		}
+		
 		shipBlocksSunk[PLAYER_ONE] = 0;
 		shipBlocksSunk[PLAYER_TWO] = 0;
 		
@@ -59,40 +68,46 @@ public class Game {
 	 * @param player	The player of the board that is being checked.
 	 * @return If the ship specified is placed.
 	 */
-	public boolean placeShip(int column, int row, int size, boolean horiz, int player){
+	public boolean placeShip(Ship ship, int player){
 		boolean valid = false;
 		
-		valid = isShipValid(column, row, size, horiz, player);
+		valid = ship.isValid(player);
 
-		for (int i = 0; i <= size; i++) {
+		for (int i = 0; i <= ship.getSize(); i++) {
 			if (player == PLAYER_ONE) {
-				if (horiz && valid) {
-					player1Grid[column + i][row] = ACTION_SHIP;
-				} else if (!horiz && valid) {
-					player1Grid[column][row + i] = ACTION_SHIP;
+				if (ship.isHoriz() && valid) {
+					player1Grid[ship.getColumn() + i][ship.getRow()] = ACTION_SHIP;
+				} else if (!ship.isHoriz() && valid) {
+					player1Grid[ship.getColumn()][ship.getRow() + i] = ACTION_SHIP;
 				}
 			} else if (player == PLAYER_TWO) {
-				if (horiz && valid) {
-					player2Grid[column + i][row] = ACTION_SHIP;
-				} else if (!horiz && valid) {
-					player2Grid[column][row + i] = ACTION_SHIP;
+				if (ship.isHoriz() && valid) {
+					player2Grid[ship.getColumn() + i][ship.getRow()] = ACTION_SHIP;
+				} else if (!ship.isHoriz() && valid) {
+					player2Grid[ship.getColumn()][ship.getRow() + i] = ACTION_SHIP;
 				}
 			}
 		}
 		return valid;
 	}
 	
-	public void placeRandomShip(int size, int player){
+	/**
+	 * Sets the column and row of the specified ship that should already have a 
+	 * size set.
+	 * @param ship The ship that is to be given a random position
+	 * @param player The player of the board to be set on.
+	 */
+	public void placeRandomShip(Ship ship, int player){
 		Random rand = new Random();
+
+		ship.setColumn(rand.nextInt(10));
+		ship.setRow(rand.nextInt(10));
+		ship.setHoriz(rand.nextBoolean());		
 		
-		int randCol = rand.nextInt(10);
-		int randRow = rand.nextInt(10);
-		boolean randBool = rand.nextBoolean();		
-		
-		while (!placeShip(randCol, randRow, size, randBool, player)){
-			randCol = rand.nextInt(10);
-			randRow = rand.nextInt(10);
-			randBool = rand.nextBoolean();
+		while (!placeShip(ship, player)){
+			ship.setColumn(rand.nextInt(10));
+			ship.setRow(rand.nextInt(10));
+			ship.setHoriz(rand.nextBoolean());	
 		}
 			
 	}
@@ -105,10 +120,12 @@ public class Game {
 	public void placeAllShips(int player){
 		if (!shipsSet[player]) {
 			for (int i = 0; i <= 4; i++) {
-				if (i <= 1) {
-					placeRandomShip(i + 1, player);
-				} else {
-					placeRandomShip(i, player);
+				if (i <= 1) { // this will set 0 and 1 to ship sizes 2 and 3
+					ships[player][i].setSize(i + 1);;
+					placeRandomShip(ships[player][i], player);
+				} else { // this sets ship sizes 3 4 5
+					ships[player][i].setSize(i);;
+					placeRandomShip(ships[player][i], player);
 				}
 			}
 			shipsSet[player] = true;
