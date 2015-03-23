@@ -43,8 +43,8 @@ public class Game {
 		
 		ships = new Ship[2][5];
 		
-		for(int i = ships.length; i <= ships.length; i++){
-			for (int j = ships[i].length; j <= ships[i].length ; j++){
+		for(int i = 0; i < ships.length; i++){
+			for (int j = 0; j < ships[i].length ; j++){
 				ships[i][j] = new Ship(0,0,0,true); // sets initial values for ship object.		
 			}
 		}
@@ -104,7 +104,7 @@ public class Game {
 		ship.setRow(rand.nextInt(10));
 		ship.setHoriz(rand.nextBoolean());		
 		
-		while (!placeShip(ship, player)){
+		while (!placeShip(ship, player)){ // Re-tries if the placement isn't valid.
 			ship.setColumn(rand.nextInt(10));
 			ship.setRow(rand.nextInt(10));
 			ship.setHoriz(rand.nextBoolean());	
