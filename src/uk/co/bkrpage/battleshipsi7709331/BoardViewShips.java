@@ -11,8 +11,6 @@ public class BoardViewShips extends BoardView {
 		super(context, attrs);
 	}
 	
-	// I need to add on the ship placement so that it only starts in 
-	// this view only and not for every subclass of BoardView
 	@Override
 	public void init(){
 		super.init(); 
@@ -34,7 +32,7 @@ public class BoardViewShips extends BoardView {
 		for (int col = 0; col < game.getColumns(); col++) {
 			for (int row = 0; row < game.getRows(); row++) {
 				Paint paint;
-				actionAtPos = game.getPlayer1Grid(col, row);
+				actionAtPos = Game.getPlayer1Grid(col, row);
 
 				if (actionAtPos == Game.ACTION_SHIP) {
 					paint = getShipPaint();

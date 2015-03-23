@@ -22,20 +22,19 @@ public class Ship {
 		for (int i = 0; i <= size; i++) {
 			if (player == Game.PLAYER_ONE){ //Check which player grid to compare
 				// Check the next position in grid depending on if ship is horizontal or not.
-				if ((this.isHoriz && column + i >= 10)
+				if ((this.isHoriz && column + i >= 9)
 						|| (this.isHoriz && (Game.getPlayer1Grid(column + i,row) == Game.ACTION_SHIP))) {
-					
 					isValid = false;
-				} else if ((!this.isHoriz && row + i >= 10)
+				} else if ((!this.isHoriz && row + i >= 9)
 						|| (!this.isHoriz && (Game.getPlayer1Grid(column,row + i) == Game.ACTION_SHIP))) {
 					isValid = false;
 				}
 			} 
 			else if (player == Game.PLAYER_TWO){
-				if ((this.isHoriz && column + i >= 10)
+				if ((this.isHoriz && column + i >= 9)
 						|| (this.isHoriz && (Game.getPlayer2Grid(column + 1, row) == Game.ACTION_SHIP))) {
 					isValid = false;
-				} else if ((!this.isHoriz && row + i >= 10)
+				} else if ((!this.isHoriz && row + i >= 9)
 						|| (!this.isHoriz && (Game.getPlayer2Grid(column, row + 1) == Game.ACTION_SHIP))) {
 					isValid = false;
 				}
