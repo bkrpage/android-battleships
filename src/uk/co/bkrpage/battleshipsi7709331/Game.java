@@ -61,11 +61,8 @@ public class Game {
 	
 	/**
 	 * Places a ship at the specified position. Uses isShipValid() to check before placement.
-	 * @param column	The x grid co-ordinate of the ship
-	 * @param row		The y grid co-ordinate of the ship
-	 * @param size		The size (in blocks) of the ship
-	 * @param horiz 	Is the ship Horizontal? x and y co-ords are the top left of the ship at all time.
-	 * @param player	The player of the board that is being checked.
+	 * @param ship		The ship object to be placed.
+	 * @param player	The player of the board that is being checked and placed on.
 	 * @return If the ship specified is placed.
 	 */
 	public boolean placeShip(Ship ship, int player){
